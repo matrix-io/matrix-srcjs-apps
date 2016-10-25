@@ -1,0 +1,14 @@
+# do not touch this line
+configVersion: 2
+
+description: test the sensors fool
+name: sensorTest
+
+sensors:
+  - temperature
+  - humidity
+  - accelerometer
+  - gyroscope
+  - uv
+  - pressure
+  - altitude
