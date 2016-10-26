@@ -2,6 +2,6 @@
 // matrix.init()....
 //
 // have fun
-matrix.init('gesture').then(function(data){
+matrix.init('palm').then(function(data){
   console.log('>>>>>>>>>>', data);
 });
