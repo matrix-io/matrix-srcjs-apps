@@ -17,7 +17,7 @@ setInterval(function () {
 
 matrix.init('temperature').then(function(data){
   console.log('temperature >', data);
-  // matrix.type('c').send(data);
+  matrix.type('temperature').send(data);
   ledState.temp = {
     arc: arcDeg,
     color: 'blue',
@@ -28,6 +28,7 @@ matrix.init('temperature').then(function(data){
 matrix.init('pressure').then(function(data){
   console.log('pressure >', data);
 
+  matrix.type('pressure').send(data);
   ledState.pres = {
     arc: arcDeg,
     color: 'purple',
@@ -39,7 +40,7 @@ matrix.init('pressure').then(function(data){
 
 matrix.init('gyroscope').then(function(data){
   console.log('gyroscope >', data);
-
+matrix.type('gyroscope').send(data);
   ledState.g = {
     arc: arcDeg,
     color: 'green',
@@ -53,6 +54,7 @@ matrix.init('gyroscope').then(function(data){
 
 matrix.init('uv').then(function(data){
   console.log('uv >', data);
+  matrix.type('uv').send(data);
   ledState.u = {
     arc: arcDeg,
     color: 'yellow',
@@ -64,6 +66,7 @@ matrix.init('uv').then(function(data){
 
 matrix.init('altitude').then(function(data){
   console.log('altitude >', data);
+  matrix.type('altitude').send(data);
   ledState.a = {
     arc: arcDeg,
     color: 'orange',
@@ -75,6 +78,8 @@ matrix.init('altitude').then(function(data){
 
 matrix.init('humidity').then(function(data){
   console.log('humidity >', data);
+
+  matrix.type('humidity').send(data);
   ledState.h = {
     arc: arcDeg,
     color: 'red',

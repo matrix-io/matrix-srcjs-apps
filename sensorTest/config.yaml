@@ -12,3 +12,12 @@ sensors:
   - uv
   - pressure
   - altitude
+
+dataTypes:
+  - temperature
+  - humidity
+  - accelerometer
+  - gyroscope
+  - uv
+  - pressure
+  - altitude
