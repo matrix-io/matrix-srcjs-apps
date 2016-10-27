@@ -21,8 +21,10 @@ matrix.init('temperature').then(function(data){
   ledState.temp = {
     arc: arcDeg,
     color: 'blue',
-    start: 1
-  };
+    start: 1,
+spin: arcDeg
+}
+;
 });
 
 matrix.init('pressure').then(function(data){
@@ -32,8 +34,9 @@ matrix.init('pressure').then(function(data){
   ledState.pres = {
     arc: arcDeg,
     color: 'purple',
-    start: 60
-  };
+    start: 60,
+spin: arcDeg
+};
 
 });
 
@@ -44,7 +47,8 @@ matrix.type('gyroscope').send(data);
   ledState.g = {
     arc: arcDeg,
     color: 'green',
-    start: 120
+    start: 120,
+    spin: arcDeg
   };
 
 
@@ -58,7 +62,8 @@ matrix.init('uv').then(function(data){
   ledState.u = {
     arc: arcDeg,
     color: 'yellow',
-    start: 180
+    start: 180,
+    spin: arcDeg
   };
 });
 
@@ -70,7 +75,8 @@ matrix.init('altitude').then(function(data){
   ledState.a = {
     arc: arcDeg,
     color: 'orange',
-    start: 240
+    start: 240,
+    spin: arcDeg
   };
 });
 
@@ -83,6 +89,7 @@ matrix.init('humidity').then(function(data){
   ledState.h = {
     arc: arcDeg,
     color: 'red',
-    start: 300
+    start: 300,
+    spin: arcDeg
   };
 });

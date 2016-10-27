@@ -14,10 +14,13 @@ sensors:
   - altitude
 
 dataTypes:
-  - temperature
-  - humidity
-  - accelerometer
-  - gyroscope
-  - uv
-  - pressure
-  - altitude
+  temperature: float
+  humidity: float
+  accelerometer: float
+  gyroscope:
+    x: float
+    y: float
+    z: float
+  uv: float
+  pressure: float
+  altitude: float
