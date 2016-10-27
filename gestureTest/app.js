@@ -2,6 +2,8 @@
 // matrix.init()....
 //
 // have fun
+matrix.led('red').render();
+
 matrix.init('palm').then(function(data){
   console.log('>>>>>>>>>>', data);
   matrix.led('blue').render();
