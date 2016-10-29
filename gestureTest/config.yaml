@@ -4,3 +4,8 @@ configVersion: 2
 description: test gestures
 keywords: test
 name: gestureTest
+
+services:
+  fistWatch:
+    engine: gesture
+    type: fist

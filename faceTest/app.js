@@ -4,7 +4,7 @@
 // have fun
 matrix.led('red').render();
 
-matrix.init('face', { type: "FACE" }).then(function(data){
+matrix.init('demographics').then(function(data){
   console.log('>>>>>>>>>>', data);
   matrix.led('green').render();
   setTimeout(function() {
