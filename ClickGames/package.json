@@ -1,6 +1,6 @@
 {
   "name": "clickgames",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,6 @@
   "dependencies": {
     "cpu-stats": "^1.0.0",
     "play-sound": "^1.1.1",
-    "sfx": "^0.1.1"
+    "tree-kill": "^1.1.0"
   }
 }
