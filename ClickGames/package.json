@@ -1,7 +1,7 @@
 {
   "name": "clickgames",
-  "version": "0.0.4",
-  "description": "",
+  "version": "0.0.5",
+  "description": "Test your skills with some accurate clicking :)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

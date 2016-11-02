@@ -6,14 +6,14 @@ description: Games for your mouse
 keywords: 'everloop,mouse,click,reflexes'
 dataTypes:
   clickGames:
-    failCount: float
-    perfect: float
-    ok: float
+    failedHitsCounter: float
+    perfectHitsCounter: float
+    okHitsCounter: float
 screens:
 - - mouseActions
 - - information
-- - perfect
-- - ok
+- - perfectHitsCounter
+- - okHitsCounter
 widgets:
   mouseActions:
     control: button
@@ -29,21 +29,21 @@ widgets:
   information:
     display: digit
     keys:
-    - failCount
+    - failedHitsCounter
     format: count
     label: Intentos fallidos
     type: clickGames
-  perfect:
+  perfectHitsCounter:
     display: digit
     keys:
-    - perfect
+    - perfectHitsCounter
     format: count
     label: Total perfect
     type: clickGames
-  ok:
+  okHitsCounter:
     display: digit
     keys:
-    - ok
+    - okHitsCounter
     format: count
     label: Total ok
     type: clickGames

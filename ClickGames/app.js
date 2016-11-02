@@ -7,25 +7,114 @@ var fs = require('fs'),
 async = require('async'),
 player = require('play-sound')(opts = {}),
 treeKill = require('tree-kill'),
-EventEmitter = require('events').EventEmitter;
-var Mouse = require('./node-mouse.js');
+EventEmitter = require('events').EventEmitter,
+Mouse = require('./node-mouse.js');
 var mouse = new Mouse();
 
-var perfectHit = false;
-var okHit = false;
-var failedHit = false;
-var okValueHigh = 44;
-var perfectValueHigh = 30;
-var perfectValueLow = 24;
-var okValueLow = 14;
-var currentLed;
-var currentState;
+var states = {
+  'menu': {}, 
+  'quickplay': {},
+  'options': {},
+  'themes': {},
+};
+
+var defaultUIColor = 'darkgray';
+//rgba(255, 0, 100, 0.6)
+var hitColor = {
+  perfect: 'green',
+  ok: 'yellow',
+  failed: 'red'
+};
+
+var currentHit = 'none';
+var finalHit = false;
 var paused = false;
+
+//This section is used to display menus and results 
+var uiLower = 1;
+var uiHigher = 5;
+var uiWidth = uiHigher - uiLower;
+var uiBorderColor = 'darkblue';
+//var uiLivesColor = 'orange';
+var uiLivesColor = '#CC6600';
+
+var startingLed = uiHigher + 2; // +2 to keep a separator between UI and starting LED
+var endingLed = 34; 
+
+// Starting configuration 
+var okLowerLimit = 25;
+var okHigherLimit = 34;
+var okLimitRange = okHigherLimit - okLowerLimit + 1; //25 - 34 = 10 LEDS
+var okDesiredRange = 3;
+var perfectRange = 1;
+var difficulty = 0; //NOT USED
+var startingSpeed = 5;
+var startingLives = 3;
+var maxLives = 5;
+var currentLives = startingLives;
+var ledArray = [];
+var quickPlayInterval;
+
+// These variables are used to place the current target, crosshair and state
+var currentOkLow, currentOkHigh, currentPerfectLow, currentPerfectHigh, currentLed, currentState;
+
+
+////////////////////////////////////// MISC FUNCTIONS START //////////////////////////////////////
+
+// Returns a random integer between a min (inclusive) and a max (inclusive)
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function loop(filepath) {
   var audioProcess = player.play(filepath, { omxplayer: ['--loop'], mplayer: ['-loop', 0] }, function (err) { });
   return audioProcess;
 }
+
+function changeState(previousState, nextState) {
+  if (_.isUndefined(nextState)) {
+    nextState = previousState;
+  } else {
+    states[previousState].kill();
+  }
+  currentState = nextState;
+  states[nextState].start();
+}
+
+function flashArc(start, length, color, time, reset, callback) {
+  matrix.led({
+    arc: length, // degrees of arc [ 90° = quadrant ]
+    color: color, // color
+    start: start // index to start drawing arc
+  }).render();
+
+  setTimeout(function () {
+    if (reset) matrix.led('black').render();
+    callback();
+  }, time);
+}
+
+function paintRange(fromLed, toLed, color) {
+  for (var i = fromLed; i <= toLed; i++) { ledArray[i] = color; } 
+}
+
+function drawScoreBarObject(color) {
+  paintRange(uiLower, uiHigher, color); // Background
+  ledArray[uiLower - 1] = uiBorderColor; // Left limit
+  ledArray[uiHigher + 1] = uiBorderColor; // Right limit
+  var livestoDraw = currentLives;
+  if (livestoDraw > uiWidth) livestoDraw = uiWidth; // Don't exceed ui limits
+  if (color == defaultUIColor) paintRange(uiLower, uiLower + livestoDraw - 1, uiLivesColor); // Paint lives
+}
+
+function relocateTarget() {
+  currentOkLow = getRandomInt(okLowerLimit, okHigherLimit - (okDesiredRange + 1)); //25, (34 - (3 + 1)) = 30 in max case scenario
+  currentOkHigh = currentOkLow + okDesiredRange - 1; // 30 + (3 - 1) = 32
+  currentPerfectLow = currentOkLow + Math.floor(okDesiredRange / 2); // 30 + (3/2=1) = 31
+  currentPerfectHigh = currentPerfectLow + perfectRange - 1; // 31 + 1 - 1 = 31 
+}
+////////////////////////////////////// MISC FUNCTIONS END //////////////////////////////////////
+
 
 //MXSS ACTIONS
 matrix.on('leftClick', function() { 
@@ -45,38 +134,36 @@ mouse.on('mousedown', function (actions) {
 function onOkButton() {
   switch (currentState) {
     case 'menu':
-      killMenuState();
-      quickPlayState();
+      changeState('menu', 'quickplay');
       break;
     case 'quickplay':
-      if (!paused) {
-        if (currentLed <= perfectValueHigh && currentLed >= perfectValueLow) {
-          console.log("*********************************** PERFECT HIT *********************************** (" + perfectValueLow + " < " + currentLed + " < " + perfectValueHigh + ")");
-          perfectHit = true;
-        } else if (currentLed <= okValueHigh && currentLed >= okValueLow) {
-          console.log("*********************************** OK HIT *********************************** (" + okValueLow + " < " + currentLed + " < " + okValueHigh + ")");
-          okHit = true;
-        } else {
-          failedHit = true;
-          console.log("*********************************** RANDOM HIT *********************************** (" + currentLed + ")");
-        } 
-      } else {
+      if (paused) { //Go to Main Menu
         paused = false;
-        killQuickPlayState();
-        currentState = 'menu';
-        menuState();
+        clearInterval(quickPlayInterval);
+        changeState('quickplay', 'menu');
+      } else { //Playing
+        if (currentLed <= currentPerfectHigh && currentLed >= currentPerfectLow) {
+          console.log("*********************************** PERFECT HIT *********************************** (" + currentPerfectLow + " < " + currentLed + " < " + currentPerfectHigh + ")");
+          currentHit = 'perfect';
+        } else if (currentLed <= currentOkHigh && currentLed >= currentOkLow) {
+          console.log("*********************************** OK HIT *********************************** (" + currentOkLow + " < " + currentLed + " < " + currentOkHigh + ")");
+          currentHit = 'ok';
+        } else {
+          console.log("*********************************** FAILED HIT *********************************** (" + currentLed + ")");
+          currentHit = 'failed';
+        } 
       }
       break;
     default:
       break;
   }
-  flashArc(0, 360, 'blue', 500, true, function () {});
+  //flashArc(0, 360, 'blue', 500, true, function () {});
 }
 
 function onCancelButton() {
   switch (currentState) {
     case 'menu':
-      killMenuState();
+      //Easter Egg maybe
       break;
     case 'quickplay':
       if (!paused) {
@@ -89,7 +176,7 @@ function onCancelButton() {
     default:
       break;
   }
-  flashArc(0, 360, 'red', 500, true, function () {});
+  //flashArc(0, 360, 'red', 500, true, function () {});
 }
 
 start(); //Intro arc
@@ -97,186 +184,167 @@ start(); //Intro arc
 function start() {
   async.parallel([
     function (next) { 
-      player.play(__dirname + '/Sounds/Speech/Diego/ClickGames.ogg', function (err) {
-        next();
-      });
+      player.play(__dirname + '/Sounds/Speech/Diego/ClickGames.ogg', function (err) { next(); });
     },
     function (next) {
       async.series([
-        async.apply(flashArc, 0, 90, 'red', 125, true),
-        async.apply(flashArc, 90, 90, 'blue', 125, true),
-        async.apply(flashArc, 180, 90, 'green', 125, true),
-        async.apply(flashArc, 270, 90, 'yellow', 125, true)
+        async.apply(flashArc, 0, 90, 'red', 100, true),
+        async.apply(flashArc, 90, 90, 'blue', 100, true),
+        async.apply(flashArc, 180, 90, 'green', 100, true),
+        async.apply(flashArc, 270, 90, 'yellow', 100, true)
       ], next);
     }
-  ], menuState);
+  ], function () { 
+    changeState('menu');
+  });
 }
 
-var killMenuState = function () { };
-
-function menuState() {
-  currentState = 'menu';
+states.menu.start = function () {
+  paintRange(0, 34, '0'); //Set background
+  paintRange(uiLower, uiHigher, defaultUIColor); // Background
+  ledArray[uiLower - 1] = uiBorderColor; // Left limit
+  ledArray[uiHigher + 1] = uiBorderColor; // Right limit
   player.play(__dirname + '/Sounds/Speech/Diego/QuickPlay.ogg', function (err) { }); //Option selected by default
-  var loopProcess = loop(__dirname + '/Sounds/Intro.ogg'); //Intro BGM
-  killMenuState = function () {
-    treeKill(loopProcess.pid);
-  };
-}
-
-function drawScoreBarObject(color) { 
-  return {
-    arc: 30,
-    color: color, // color
-    start: 340 // index to start drawing arc
-  };
-}
-
-var difficulty = 0;
-
-function flashArc(start, length, color, time, reset, callback) {
-  matrix.led({
-    arc: length, // degrees of arc [ 90° = quadrant ]
-    color: color, // color
-    start: start // index to start drawing arc
-  }).render();
-
-  setTimeout(function () {
-    if (reset) matrix.led('black').render();
-    callback();
-  }, time);
-}
-
-var killQuickPlayState = function() { }; //Placeholder
-
-function quickPlayState() {
-  currentState = 'quickplay';
-
-  var bgmLoop = loop(__dirname + '/Sounds/Arcade/bgm.ogg'); //Intro BGM
+  var menuBGMProcess = loop(__dirname + '/Sounds/Intro.ogg'); //Intro BGM
   
-  var ledArray = [];
-  ledArray.push(drawScoreBarObject('white')); //Set score bar 0
-  ledArray.push({
-    arc: okValueHigh - perfectValueHigh,
-    color: 'yellow',
-    start: perfectValueHigh
-  });
-  ledArray.push({
-    arc: perfectValueHigh - perfectValueLow,
-    color: 'green',
-    start: perfectValueLow
-  });
-  ledArray.push({
-    arc: perfectValueLow - okValueLow,
-    color: 'yellow',
-    start: okValueLow
-  });
+  states.menu.kill = function () {
+    treeKill(menuBGMProcess.pid);
+  };
+  console.log(ledArray);
+  matrix.led(ledArray).render();
+};
+
+states.quickplay.start = function () {
+
+  var quickplayBGMProcess = loop(__dirname + '/Sounds/Arcade/bgm.ogg'); //Intro BGM
   
-  var failCount = 0;
-  var failedCounter = 0;
-  var perfectCounter = 0;
-  var okCounter = 0;
-  var perfectCounterNumber = 0;
-  var okCounterNumber = 0;
+  states.quickplay.kill = function () {
+    treeKill(quickplayBGMProcess.pid);
+  };
 
-  var quickPlayTimeout;
+  var failedUIFor = 5;
+  var perfectUIFor = 5;
+  var okUIFor = 5;
 
-  startRunning(2);
+  var failedHitsCounter = 0;
+  var perfectHitsCounter = 0;
+  var okHitsCounter = 0;
+  var perfectsInARow = 0;
+  var newLifePerfectCount = 3;
 
-  function startRunning(speed) {
-    currentLed = 340;
-    var previousLed;
-    var endingLed = 10;
-    
-    quickPlayTimeout = setInterval(function () {
-      if (!paused) {
-        if (failedCounter > 0) {
-          failedCounter--;
-          ledArray = [];
-          ledArray.push(drawScoreBarObject('red'));
-        } else if (perfectCounter > 0) {
-          perfectCounter--;
-          ledArray = [];
-          ledArray.push(drawScoreBarObject('green'));
-        } else if (okCounter > 0) {
-          okCounter--;
-          ledArray = [];
-          ledArray.push(drawScoreBarObject('yellow'));
+
+  function resetHit() {
+    currentHit = "none";
+    currentLed = startingLed;
+    relocateTarget();
+  }
+
+  function countHit(type) {
+    var coloredJumps = 5;
+    switch (type) {
+      case 'perfect':
+        drawScoreBarObject(hitColor.perfect);
+        resetHit();
+        perfectHitsCounter++;
+        perfectUIFor = coloredJumps;
+        matrix.type('clickGames').send({
+          'perfect': perfectHitsCounter
+        });
+        perfectsInARow++;
+        if (perfectsInARow == newLifePerfectCount && currentLives < maxLives) {
+          currentLives++;
+          player.play(__dirname + '/Sounds/Arcade/lifeUp.wav', function (err) { });
         } else {
-          ledArray = [];
-          ledArray.push(drawScoreBarObject('white'));
-          ledArray.push({
-            arc: okValueHigh - perfectValueHigh,
-            color: 'yellow',
-            start: perfectValueHigh
-          });
-          ledArray.push({
-            arc: perfectValueHigh - perfectValueLow,
-            color: 'green',
-            start: perfectValueLow
-          });
-          ledArray.push({
-            arc: perfectValueLow - okValueLow,
-            color: 'yellow',
-            start: okValueLow
-          });
-          ////
-          if (ledArray.length > 4) ledArray.splice(-1, 1);
+          player.play(__dirname + '/Sounds/Arcade/perfect.wav', function (err) { });
         }
-        previousLed = currentLed;
-        if (currentLed > 0) currentLed -= 2;
-        ledArray.push({ angle: currentLed, color: 'magenta' });
-        matrix.led(ledArray).render();
-        if (currentLed <= endingLed || failedHit) {
-          failedHit = false;
-          if (failCount == 3000) {
-            killQuickPlayState();
-            player.play(__dirname + '/Sounds/Arcade/explosion.wav', function (err) {
-              currentState = 'menu';
-              menuState();
-            });
-          } else {
-            currentLed = 340;
-            player.play(__dirname + '/Sounds/Arcade/miss.wav', function (err) {});
-          }
-          failCount++;
-          //ledArray.splice(-1, 1);
-          ledArray = [];
-          ledArray.push(drawScoreBarObject('red'));
-          failedCounter = 20;
-          //ledArray.push({ angle: currentLed, color: 'magenta' });
-          matrix.led(ledArray).render();
-          matrix.type('clickGames').send({
-                'failCount': failCount
-          });
+        break;
+      case 'ok':
+        drawScoreBarObject(hitColor.ok);
+        resetHit();
+        okHitsCounter++;
+        okUIFor = coloredJumps;
+        matrix.type('clickGames').send({
+          'ok': okHitsCounter
+        });
+        player.play(__dirname + '/Sounds/Arcade/progress.wav', function (err) { });
+        perfectsInARow = 0;
+        break;
+      case 'failed':
+        drawScoreBarObject(hitColor.failed);
+        resetHit();
+        currentLives--;
+        failedUIFor = coloredJumps;
+        if (currentLives === 0) { // If lives are over, stop
+          finalHit = true;
+        } else { // Reset to start 
+          player.play(__dirname + '/Sounds/Arcade/miss.wav', function (err) { });
+        }
+        matrix.type('clickGames').send({
+          'failedHitsCounter': failedHitsCounter
+        });
+        perfectsInARow = 0;
+        break;
+      default:
+        break;
+    }
+  }
 
-        } else if (perfectHit) {
-          perfectCounterNumber += 1;
-          matrix.type('clickGames').send({
-                'perfect': perfectCounterNumber
+  startRunning(startingSpeed);
+  
+  function startRunning(speed) {
+    resetHit();
+    currentLives = startingLives;
+    quickPlayInterval = setInterval(function () {
+      paintRange(0, 34, 0); // Set background LEDs to black
+
+      if (!paused) {
+
+        currentLed++; // Move current led
+        paintRange(currentOkLow, currentOkHigh, 'yellow'); // Paint ok
+        paintRange(currentPerfectLow, currentPerfectHigh, 'green'); // Paint perfect
+
+        // Color the UI according to previous hit
+        if (failedUIFor > 0) { // Failed hit
+          drawScoreBarObject(hitColor.failed);
+        } else if (perfectUIFor > 0) { // Perfect Hit
+          drawScoreBarObject(hitColor.perfect);
+        } else if (okUIFor > 0) { // Ok Hit
+          drawScoreBarObject(hitColor.ok);
+        } else { // Normal UI
+          drawScoreBarObject(defaultUIColor);
+        }
+
+        failedUIFor--;
+        perfectUIFor--;
+        okUIFor--;
+
+        //Count hit        
+        if (currentLed >= endingLed || currentHit == 'failed') {
+          countHit('failed');
+        } else if (currentHit == 'perfect') {
+          countHit('perfect');
+        } else if (currentHit == 'ok') {
+          countHit('ok');
+        }
+
+        ledArray[currentLed] = 'magenta'; // Paint current led
+        matrix.led(ledArray).render(); // Render Everloop
+
+        if (finalHit) {
+          finalHit = false;
+          clearInterval(quickPlayInterval); // Stop moving currentLed
+          player.play(__dirname + '/Sounds/Arcade/explosion.wav', function (err) {
+            changeState('quickplay', 'menu');
           });
-          perfectCounter = 20;
-          player.play(__dirname + '/Sounds/Arcade/perfect.wav', function (err) {});
-          currentLed = 340;
-          perfectHit = false;
-        } else if (okHit) {
-          okCounterNumber += 1;
-          matrix.type('clickGames').send({
-                'ok': okCounterNumber
-          });
-          okCounter = 20;
-          player.play(__dirname + '/Sounds/Arcade/progress.wav', function (err) {});
-          currentLed = 340;
-          okHit = false;
-        } 
+        }
+      } else {
+        paintRange(0, 34, uiLivesColor);
+        matrix.led(ledArray).render();
       }
     }, speed);
-  }   
+  }
 
-  killQuickPlayState = function () {
-    if (quickPlayTimeout) clearTimeout(quickPlayTimeout);
-    treeKill(bgmLoop.pid);
-  };
-}
+};
 
 
 // to close mouse
