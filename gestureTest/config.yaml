@@ -8,4 +8,4 @@ name: gestureTest
 services:
   fistWatch:
     engine: gesture
-    type: fist
+    type: palm

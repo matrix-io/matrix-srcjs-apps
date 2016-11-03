@@ -1,0 +1,49 @@
+# do not touch this line
+configVersion: 2
+
+name: ClickGames.matrix
+description: Games for your mouse
+keywords: 'everloop,mouse,click,reflexes'
+dataTypes:
+  clickGames:
+    failedHitsCounter: float
+    perfectHitsCounter: float
+    okHitsCounter: float
+screens:
+- - mouseActions
+- - information
+- - perfectHitsCounter
+- - okHitsCounter
+widgets:
+  mouseActions:
+    control: button
+    keys:
+    - value
+    map:
+    - event: leftClick
+      value: Left Click
+    - event: rightClick
+      value: Right Click
+    name: mouseActions
+    type: mouseActions
+  information:
+    display: digit
+    keys:
+    - failedHitsCounter
+    format: count
+    label: Intentos fallidos
+    type: clickGames
+  perfectHitsCounter:
+    display: digit
+    keys:
+    - perfectHitsCounter
+    format: count
+    label: Total perfect
+    type: clickGames
+  okHitsCounter:
+    display: digit
+    keys:
+    - okHitsCounter
+    format: count
+    label: Total ok
+    type: clickGames

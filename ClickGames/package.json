@@ -1,0 +1,16 @@
+{
+  "name": "clickgames",
+  "version": "0.0.5",
+  "description": "Test your skills with some accurate clicking :)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cpu-stats": "^1.0.0",
+    "play-sound": "^1.1.1",
+    "tree-kill": "^1.1.0"
+  }
+}
