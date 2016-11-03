@@ -1,6 +1,6 @@
-#Welcome to Click Games!
+# Welcome to Click Games!
 
- **Click Games** has multiple game modes to test your skill, you can play on your own to get better at it or have fun playing with friends.
+**Click Games** has multiple game modes to test your skill, you can play on your own to get better at it or have fun playing with friends.
 
 For sound to work properly with your Raspberry Pi, you might need to install **omxplayer** in the device (`sudo apt-get install omxplayer`)
 
@@ -20,12 +20,11 @@ For sound to work properly with your Raspberry Pi, you might need to install **o
 - Practice
 - Themes
 
-###FAQ
+### FAQ
 
 **Why is there a weird noise instead of background music?**
 
 - There is probably an issue with the player used in your Pi, try installing **omxplayer**.
-
 
 #### Credits
 
