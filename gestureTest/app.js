@@ -1,5 +1,5 @@
 
-matrix.init('palm').then(function(data){
+matrix.init('fist').then(function(data){
   console.log('>>>>>>>>>>', data);
   matrix.led('blue').render();
   setTimeout(function() {
