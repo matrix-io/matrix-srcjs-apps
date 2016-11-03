@@ -11,12 +11,33 @@ EventEmitter = require('events').EventEmitter,
 Mouse = require('./node-mouse.js');
 var mouse = new Mouse();
 
+/*
+
+menu
+  - quickplay
+  - singleplayer
+    - normal mode
+    - endless mode
+    - practice mode
+  - multiplayer
+    - versus
+    - round robin 
+  - options
+    - themes
+      - arcade
+      - baseball
+
+*/
+
 var states = {
   'menu': {}, 
   'quickplay': {},
   'options': {},
   'themes': {},
 };
+
+var themes;
+
 
 var defaultUIColor = 'darkgray';
 //rgba(255, 0, 100, 0.6)
@@ -35,7 +56,6 @@ var uiLower = 1;
 var uiHigher = 5;
 var uiWidth = uiHigher - uiLower;
 var uiBorderColor = 'darkblue';
-//var uiLivesColor = 'orange';
 var uiLivesColor = '#CC6600';
 
 var startingLed = uiHigher + 2; // +2 to keep a separator between UI and starting LED
@@ -53,7 +73,6 @@ var startingLives = 3;
 var maxLives = 5;
 var currentLives = startingLives;
 var ledArray = [];
-var quickPlayInterval;
 
 // These variables are used to place the current target, crosshair and state
 var currentOkLow, currentOkHigh, currentPerfectLow, currentPerfectHigh, currentLed, currentState;
@@ -139,7 +158,6 @@ function onOkButton() {
     case 'quickplay':
       if (paused) { //Go to Main Menu
         paused = false;
-        clearInterval(quickPlayInterval);
         changeState('quickplay', 'menu');
       } else { //Playing
         if (currentLed <= currentPerfectHigh && currentLed >= currentPerfectLow) {
@@ -210,16 +228,16 @@ states.menu.start = function () {
   states.menu.kill = function () {
     treeKill(menuBGMProcess.pid);
   };
-  console.log(ledArray);
+  
   matrix.led(ledArray).render();
 };
 
 states.quickplay.start = function () {
 
-  var quickplayBGMProcess = loop(__dirname + '/Sounds/Arcade/bgm.ogg'); //Intro BGM
-  
+  states.quickplay.bgm = loop(__dirname + '/Sounds/Arcade/bgm.ogg'); //Intro BGM
   states.quickplay.kill = function () {
-    treeKill(quickplayBGMProcess.pid);
+    if(states.quickplay.hasOwnProperty('interval') && states.quickplay.interval) clearInterval(states.quickplay.interval);
+    treeKill(states.quickplay.bgm.pid);
   };
 
   var failedUIFor = 5;
@@ -294,7 +312,7 @@ states.quickplay.start = function () {
   function startRunning(speed) {
     resetHit();
     currentLives = startingLives;
-    quickPlayInterval = setInterval(function () {
+    states.quickplay.interval = setInterval(function () {
       paintRange(0, 34, 0); // Set background LEDs to black
 
       if (!paused) {
@@ -332,7 +350,7 @@ states.quickplay.start = function () {
 
         if (finalHit) {
           finalHit = false;
-          clearInterval(quickPlayInterval); // Stop moving currentLed
+          clearInterval(states.quickplay.interval); // Stop moving currentLed
           player.play(__dirname + '/Sounds/Arcade/explosion.wav', function (err) {
             changeState('quickplay', 'menu');
           });
