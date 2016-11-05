@@ -17,7 +17,13 @@ matrix.init('everloop').then(function(data){
 
   matrix.type('everloop').send(data);
 
-  leds.push({ color: 'green', arc: 360 });
-  leds.push({ color: 'red', arc: 360 });
-  leds.push({ color: 'blue', arc: 360 });
+  for (var i = 0; i < 36; i++) {
+    leds.push({
+      angle: i * 9 + 1 + startAngle,
+      color: { r: 255, g:0, b: 0},
+      spin: i*10,
+      blend: true
+    });
+  }
+
 });
