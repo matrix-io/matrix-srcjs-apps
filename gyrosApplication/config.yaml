@@ -1,0 +1,8 @@
+# do not touch this line
+configVersion: 2
+
+description: >-
+  This is an application for testing the gyroscope of MATRIX. We are gonna make
+  the everloop show some color based on the vector of the MATRIX
+keywords: gyroscope everloop matrix
+name: gyrosApplication

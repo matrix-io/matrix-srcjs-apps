@@ -7,7 +7,7 @@ var leds = [];
 
 
 setInterval(function(){
-  matrix.led(_.values(ledState)).render();
+  matrix.led(_.values(leds)).render();
 }, 1000);
 
 
