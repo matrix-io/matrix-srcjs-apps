@@ -25,18 +25,6 @@ matrix.init('temperatureUp')
         matrix.emit('ac-control', 'turnOff', data);
       })
 
-//so, this is just a (not a good one (this is not a good way of doing this)) controller for the door
-matrix.init('face')
-  .has('happy')
-    .above(50)
-      .then(function(data) {
-        console.log('Happy detection <', data);
-        matrix.type('happyFace').send(data);
-        //shows at the dashboard that the door is unlocked
-        matrix.emit('door-control', 'unlock', data);
-      });
-
-
 
 matrix.on('turnOn', function(data) {
   //
@@ -53,14 +41,3 @@ matrix.on('turnOff', function(data) {
   	matrix.led('red').render();
   }, 500);
 });
-
-
-matrix.on('unlock', function(data) {
-  //so, here i need to unlock the door
-  console.log('>>>>>>> You are happy enough to enter <<<<<<<');
-  setTimeout(function() {
-  	matrix.led('green').render();
-  }, 500);
-});
-
-})
