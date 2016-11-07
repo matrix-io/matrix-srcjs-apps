@@ -4,3 +4,5 @@ configVersion: 2
 name: everloopTest
 description: testing for everloop
 keywords: everloop
+
+everloop: float
