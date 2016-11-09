@@ -7,10 +7,6 @@ description: >-
   if some conditions are true
 keywords: filter sensors
 
-dataTypes:
-  temperature: float
-
-
 sensors:
   - temperature
 
