@@ -4,3 +4,63 @@ configVersion: 2
 name: MatrixInfoApp
 description: This app shows informations about all sensor on app dashboard
 keywords: 'sensor, info, dash'
+
+screens:
+  - - temperatureSensor
+  - - humiditySensor
+  - - accelerometerSensor
+  - - gyroscopeSensor
+  - - uvSensor
+  - - pressureSensor
+  - - altitudeSensor
+
+sensors:
+  - temperature
+  - humidity
+  - accelerometer
+  - gyroscope
+  - uv
+  - pressure
+  - altitude
+
+dataTypes:
+  temperature: float
+  humidity: float
+  accelerometer: float
+  gyroscope:
+    x: float
+    y: float
+    z: float
+  uv: float
+  pressure: float
+  altitude: float
+
+widgets:
+  temperatureSensor:
+    type: temperature
+    label: Temperature ºC
+    display: digit
+  humiditySensor:
+    type: humidity
+    label: Humidity %
+    display: digit
+  accelerometerSensor:
+    type: accelerometer
+    label: Accelerometer
+    display: digit
+  gyroscopeSensor:
+    type: gyroscope
+    label: Humidity %
+    display: digit
+  uvSensor:
+    type: uv
+    label: UV Risk
+    display: digit
+  pressureSensor:
+    type: pressure
+    label: Pressure
+    display: digit
+  altitudeSensor:
+    type: altitude
+    label: Altitude
+    display: digit
