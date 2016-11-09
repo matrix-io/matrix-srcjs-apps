@@ -3,7 +3,10 @@
 //
 // have fun
 
+//matrix.led('yellow').render();
 
-matrix.on('buttonInfo', function() {
+console.log("test********************************************");
+matrix.on('buttonClick', function() {
   console.log(">>>>>>>>>> Clicking button <<<<<<<<<<");
+  matrix.led('blue').render();
 });

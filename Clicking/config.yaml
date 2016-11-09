@@ -2,7 +2,7 @@
 configVersion: 2
 
 name: Clicking
-description: >-
+description: >- STANDBY FOR NOW
   So, this app is very simple. We gonna have some buttons on dashboard, each
   button makes the leds blink in a determined color and show some information
   about each sensor
@@ -10,11 +10,12 @@ keywords: 'sensors click buttons '
 
 screens:
   - - buttonsPage
-  - - information
 
 widgets:
   buttonsPage:
     label: Sensors buttons
     control: button
-    event: buttonInfo
+    map:
+    - event: buttonClick
+      value: button click
     value: Just a button
