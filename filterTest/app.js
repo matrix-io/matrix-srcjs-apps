@@ -5,39 +5,30 @@
 
 
 //so, this is just a (not a good one) controller for the ar conditioner
-matrix.init('temperatureDown')
-  .has()
-    .above(28)
-      .then(function(data) {
-        console.log('Temperature above 28C > ', data);
-        matrix.type('temperatureDown').send(data);
-        //shows at the dashboard that the temperature is high
-        matrix.emit('ac-control', 'turnOn', data);
-      });
+//matrix.init('temperature').then(function(data) {
+//        console.log('Temperature', data);
+//        key = matrix.type(temp).send(data);
+//      });
 
-matrix.init('temperatureUp')
-  .has()
-    .below(16)
-      .then(function(data) {
-        console.log('Temperature under 16C <', data);
-        matrix.type('temperatureUp').send(data);
-        //shows at the dashboard that the temperature is low
-        matrix.emit('ac-control', 'turnOff', data);
-      })
+var ledState = {};
+var arcDeg = 15;
 
+setInterval(function () {
+  arcDeg += 5;
+  if ( arcDeg > 60 ){
+    arcDeg = 10;
+  }
 
-matrix.on('turnOn', function(data) {
-  //
-  console.log('>>>>>>> Reducing temperature <<<<<<<');
-  setTimeout(function() {
-  	matrix.led('blue').render();
-  }, 500);
-});
+  matrix.led(_.values(ledState)).render();
+}, 1000);
 
-matrix.on('turnOff', function(data) {
-  //
-  console.log('>>>>>>> Increasing temperature <<<<<<<');
-  setTimeout(function() {
-  	matrix.led('red').render();
-  }, 500);
+matrix.init('temperature').then(function(data){
+  console.log('temperature >', data);
+  matrix.type('temperature').send(data);
+  ledState.temp = {
+    arc: arcDeg,
+    color: 'blue',
+    start: 1,
+    spin: arcDeg
+  };
 });

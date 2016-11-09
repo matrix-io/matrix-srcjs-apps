@@ -6,3 +6,13 @@ description: >-
   this is a app test for filtering all the sensor, and showing some log messages
   if some conditions are true
 keywords: filter sensors
+
+dataTypes:
+  temperature: float
+
+
+sensors:
+  - temperature
+
+dataTypes:
+  temperature: float

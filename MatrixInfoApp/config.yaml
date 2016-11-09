@@ -1,0 +1,6 @@
+# do not touch this line
+configVersion: 2
+
+name: MatrixInfoApp
+description: This app shows informations about all sensor on app dashboard
+keywords: 'sensor, info, dash'
