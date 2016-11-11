@@ -26,10 +26,8 @@ sensors:
 dataTypes:
   temperatureValue:
     value: float
-    type: string
   humidityValue:
     value: float
-    type: string
   accelerometerValue: float
   gyroscope:
     x: float
@@ -37,50 +35,46 @@ dataTypes:
     z: float
   uvValue:
     value: float
-    risk: string
   pressureValue:
     value: float
-    type: string
   altitudeValue:
     value: float
-    type: string
 
-widgets:
-  temperatureSensor:
-    type: temperature
-    label: Temperature ºC
-    display: digit
-    key: temperatureValue
-  humiditySensor:
-    type: humidity
-    label: Humidity %
-    display: digit
-    key: humidityValue
-  accelerometerSensor:
-    type: accelerometer
-    label: Accelerometer
-    display: digit
-    key: accelerometerValue
-  gyroscopeSensor:
-    type: gyroscope
-    label: Gyroscope (x/y/z)
-    display: digit
-    key:
-      - x
-      - y
-      - z
-  uvSensor:
-    type: uv
-    label: UV value
-    display: digit
-    key: uvValue
-  pressureSensor:
-    type: pressure
-    label: Pressure
-    display: digit
-    key: pressureValue
-  altitudeSensor:
-    type: altitude
-    label: Altitude
-    display: digit
-    key: altitudeValue
+temperatureSensor:
+  type: temperature
+  label: Temperature ºC
+  display: digit
+  key: temperatureValue
+humiditySensor:
+  type: humidity
+  label: Humidity %
+  display: digit
+  key: humidityValue
+accelerometerSensor:
+  type: accelerometer
+  label: Accelerometer
+  display: digit
+  key: accelerometerValue
+gyroscopeSensor:
+  type: gyroscope
+  label: Gyroscope (x/y/z)
+  display: digit
+  keys:
+    - x
+    - y
+    - z
+uvSensor:
+  type: uv
+  label: UV value
+  display: digit
+  key: uvValue
+pressureSensor:
+  type: pressure
+  label: Pressure
+  display: digit
+  key: pressureValue
+altitudeSensor:
+  type: altitude
+  label: Altitude
+  display: digit
+  key: altitudeValue
