@@ -24,16 +24,26 @@ sensors:
   - altitude
 
 dataTypes:
-  temperature: float
-  humidity: float
-  accelerometer: float
+  temperatureValue:
+    value: float
+    type: string
+  humidityValue:
+    value: float
+    type: string
+  accelerometerValue: float
   gyroscope:
     x: float
     y: float
     z: float
-  uv: float
-  pressure: float
-  altitude: float
+  uvValue:
+    value: float
+    risk: string
+  pressureValue:
+    value: float
+    type: string
+  altitudeValue:
+    value: float
+    type: string
 
 widgets:
   temperatureSensor:
