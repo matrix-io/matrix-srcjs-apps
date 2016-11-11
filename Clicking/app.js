@@ -5,7 +5,7 @@
 
 //matrix.led('yellow').render();
 
-console.log("test********************************************");
+console.log("********************************************");
 matrix.on('buttonClick', function() {
   console.log(">>>>>>>>>> Clicking button <<<<<<<<<<");
   matrix.led('blue').render();
