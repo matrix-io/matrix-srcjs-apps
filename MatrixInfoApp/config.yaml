@@ -53,7 +53,7 @@ widgets:
     key: accelerometerValue
   gyroscopeSensor:
     type: gyroscope
-    label: Humidity %
+    label: Gyroscope (x/y/z)
     display: digit
     key:
       - x
@@ -61,7 +61,7 @@ widgets:
       - z
   uvSensor:
     type: uv
-    label: UV Risk
+    label: UV value
     display: digit
     key: uvValue
   pressureSensor:
