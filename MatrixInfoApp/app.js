@@ -19,7 +19,7 @@ matrix.init('temperature').then(function(data){
   console.log("*******************************************************");
   console.log(data);
   console.log('<< temperature >>');
-  key = matrix.type('temperatureValue').send({value: data.value});
+  matrix.type('temperatureValue').send({value: data.value});
   ledState.temp = {
     arc: arcDeg,
     color: 'blue',
@@ -33,7 +33,7 @@ matrix.init('pressure').then(function(data){
   console.log(data);
   console.log('<< pressure >>');
 
-  key = matrix.type('pressureValue').send({value: data.value});
+  matrix.type('pressureValue').send({value: data.value});
   ledState.pres = {
     arc: arcDeg,
     color: 'purple',
@@ -47,7 +47,7 @@ matrix.init('pressure').then(function(data){
 matrix.init('gyroscope').then(function(data){
   console.log("*******************************************************");
   console.log('<< gyroscope >>', data);
-  key = matrix.type('gyroscope').send({z: data.yaw, x: data.pitch, y: data.roll});
+  matrix.type('gyroscope').send({z: data.yaw, x: data.pitch, y: data.roll});
   ledState.g = {
     arc: arcDeg,
     color: 'green',
@@ -63,7 +63,7 @@ matrix.init('gyroscope').then(function(data){
 matrix.init('uv').then(function(data){
   console.log("*******************************************************");
   console.log('<< uv >>', data);
-  key = matrix.type('uvValue').send({value: data.value, risk: data.risk});
+  matrix.type('uvValue').send({value: data.value, risk: data.risk});
   ledState.u = {
     arc: arcDeg,
     color: 'yellow',
@@ -77,7 +77,7 @@ matrix.init('uv').then(function(data){
 matrix.init('altitude').then(function(data){
   console.log("*******************************************************");
   console.log('<< altitude >>', data);
-  key = matrix.type('altitudeValue').send({value: data.value});
+  matrix.type('altitudeValue').send({value: data.value});
   ledState.a = {
     arc: arcDeg,
     color: 'orange',
@@ -92,7 +92,7 @@ matrix.init('humidity').then(function(data){
   console.log("*******************************************************");
   console.log('<< humidity >>', data);
 
-  key = matrix.type('humidityValue').send({value: data.value});
+  matrix.type('humidityValue').send({value: data.value});
   ledState.h = {
     arc: arcDeg,
     color: 'red',
