@@ -7,12 +7,12 @@ keywords: 'sensor, info, dash'
 
 screens:
   - - temperatureSensor
-  - - humiditySensor
-  - - accelerometerSensor
-  - - gyroscopeSensor
-  - - uvSensor
-  - - pressureSensor
-  - - altitudeSensor
+    - humiditySensor
+    - accelerometerSensor
+    - gyroscopeSensor
+    - uvSensor
+    - pressureSensor
+    - altitudeSensor
 
 sensors:
   - temperature
@@ -37,40 +37,54 @@ dataTypes:
 
 widgets:
   temperatureSensor:
-    type: temperature
     label: Temperature ºC
     display: digit
     key: temperatureValue
+    push: false
+    pull: true
+    refresh: 60
   humiditySensor:
-    type: humidity
     label: Humidity %
     display: digit
     key: humidityValue
+    push: false
+    pull: true
+    refresh: 60
   accelerometerSensor:
-    type: accelerometer
     label: Accelerometer
     display: digit
     key: accelerometerValue
+    push: false
+    pull: true
+    refresh: 60
   gyroscopeSensor:
-    type: gyroscope
     label: Humidity %
     display: digit
     key:
       - x
       - y
       - z
+    push: false
+    pull: true
+    refresh: 60
   uvSensor:
-    type: uv
     label: UV Risk
     display: digit
     key: UValue
+    push: false
+    pull: true
+    refresh: 60
   pressureSensor:
-    type: pressure
     label: Pressure
     display: digit
     key: pressureValue
+    push: false
+    pull: true
+    refresh: 60
   altitudeSensor:
-    type: altitude
     label: Altitude
     display: digit
     key: altitudeValue
+    push: false
+    pull: true
+    refresh: 60
