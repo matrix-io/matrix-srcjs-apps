@@ -1,7 +1,7 @@
 # do not touch this line
 configVersion: 2
 
-description: test the sensors fool
+description: test the sensors
 name: sensorTest
 
 sensors:
@@ -18,9 +18,9 @@ dataTypes:
   humidity: float
   accelerometer: float
   gyroscope:
-    x: float
-    y: float
-    z: float
+    yaw: float
+    pitch: float
+    roll: float
   uv: float
   pressure: float
   altitude: float
