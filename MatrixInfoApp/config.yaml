@@ -24,67 +24,57 @@ sensors:
   - altitude
 
 dataTypes:
-  temperatureValue: float
-  humidityValue: float
-  accelerometerValue: float
+  temperatureValue:
+    temp: float
+  humidityValue:
+    h: float
+  accelerometerValue:
+    ac: float
   gyroscopeValue:
     x: float
     y: float
     z: float
-  uvValue: float
-  pressureValue: float
-  altitudeValue: float
+  uvValue:
+    u: float
+  pressureValue:
+    p: float
+  altitudeValue:
+    a: float
 
 widgets:
   temperatureSensor:
-    label: Temperature ºC
+    type: temperatureValue
     display: digit
-    key: temperatureValue
-    push: false
-    pull: true
-    refresh: 60
-  humiditySensor:
+    label: Temperature ºC
+    key: temp
+    format: fixed
+ humiditySensor:
     label: Humidity %
     display: digit
     key: humidityValue
-    push: false
-    pull: true
-    refresh: 60
+    type: fixed
   accelerometerSensor:
     label: Accelerometer
     display: digit
     key: accelerometerValue
-    push: false
-    pull: true
-    refresh: 60
+    type: fixed
   gyroscopeSensor:
     label: Humidity %
     display: digit
-    key:
-      - x
-      - y
-      - z
-    push: false
-    pull: true
-    refresh: 60
+    key: gyroscopeValue
+    type: fixed
   uvSensor:
     label: UV Risk
     display: digit
     key: UValue
-    push: false
-    pull: true
-    refresh: 60
+    type: fixed
   pressureSensor:
     label: Pressure
     display: digit
     key: pressureValue
-    push: false
-    pull: true
-    refresh: 60
+    type: fixed
   altitudeSensor:
     label: Altitude
     display: digit
     key: altitudeValue
-    push: false
-    pull: true
-    refresh: 60
+    type: fixed 60
