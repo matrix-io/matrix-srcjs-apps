@@ -29,10 +29,10 @@ setInterval(function(){
     angle: (s + (ms/1000)) * 6,
     color: 'darkblue',
     blend: true,
-    spin: i
+    // spin: i
   };
 
   i = ( i < 360 ) ? i + 1 : 0;
 
-  matrix.led([ secondLED, minuteLED, hourLED ]).render();
+  matrix.led([  minuteLED, hourLED, secondLED ]).render();
 }, 50);

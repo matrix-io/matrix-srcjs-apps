@@ -3,9 +3,9 @@ configVersion: 2
 
 description: test face
 keywords: test
-name: faceTest
+name: demographicTest
 
 services:
   faceTest:
     engine: detection
-    type: face
+    type: demographics

@@ -22,9 +22,9 @@ matrix.init('temperature').then(function(data){
     arc: arcDeg,
     color: 'blue',
     start: 1,
-spin: arcDeg
-}
-;
+    spin: arcDeg
+  }
+  ;
 });
 
 matrix.init('pressure').then(function(data){
@@ -35,15 +35,15 @@ matrix.init('pressure').then(function(data){
     arc: arcDeg,
     color: 'purple',
     start: 60,
-spin: arcDeg
-};
+    spin: arcDeg
+  };
 
 });
 
 
 matrix.init('gyroscope').then(function(data){
   console.log('gyroscope >', data);
-matrix.type('gyroscope').send(data);
+  matrix.type('gyroscope').send(data);
   ledState.g = {
     arc: arcDeg,
     color: 'green',

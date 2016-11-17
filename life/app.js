@@ -1,6 +1,6 @@
 
 var depth = 40;
-var _ = require('lodash')
+var _ = require('lodash');
 var stage = _.times(depth-1, _.constant(0));
 stage.push(1);
 
@@ -42,15 +42,15 @@ setInterval(function(){
     } else {
       stage[i] = rule90(parseInt([start[i-1],c, start[i+1]].join(''), 2));
     }
-  })
+  });
   // console.log(_.take(stage, depth).join(''));
 
   // console.log(stage.join(''));
   var colors = _.map(stage,function(b){
     if (b === 1){
-      return '#0000FF'
+      return '#0000FF';
     } else {
-      return '#000001'
+      return '#000001';
     }
   });
 
