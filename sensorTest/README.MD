@@ -1,5 +1,12 @@
 # Sensor Test
 
-This application will test all the sensors available on MATRIX OS.
+This application will test the basic sensors available on MATRIX OS.
 
-Upon running you should see six growing bands of colored lights display on the led
+- temperature
+- pressure
+- humidity
+- uv
+- altitude
+- gyroscope
+
+Upon running six bands of colored lights should display on the led for each sensor.

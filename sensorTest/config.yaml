@@ -3,6 +3,11 @@ configVersion: 2
 
 description: test the sensors
 name: sensorTest
+keywords:
+  - development
+  - testing
+  - sensors
+version: 1.0.3
 
 sensors:
   - temperature
