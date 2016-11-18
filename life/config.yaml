@@ -1,6 +1,7 @@
 name: life
 version: 1
 keywords: cellular
+description: 2d cellular automation
 configVersion: 2
 description: Matrix stats
 widgets:
