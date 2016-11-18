@@ -4,6 +4,9 @@ configVersion: 2
 description: test the sensors fool
 name: sensorTest
 
+screens:
+  - SensorsDetails
+
 sensors:
   - temperature
   - humidity
@@ -24,3 +27,9 @@ dataTypes:
   uv: float
   pressure: float
   altitude: float
+
+widgets:
+  SensorsDetails:
+    label: Sensor's Details
+    display: list-group
+    type: device

@@ -6,75 +6,27 @@ description: This app shows informations about all sensor on app dashboard
 keywords: 'sensor, info, dash'
 
 screens:
-  - - temperatureSensor
-    - humiditySensor
-    - accelerometerSensor
-    - gyroscopeSensor
-    - uvSensor
-    - pressureSensor
-    - altitudeSensor
+  - - sensorDetails
 
 sensors:
   - temperature
   - humidity
-  - accelerometer
   - gyroscope
   - uv
   - pressure
   - altitude
 
 dataTypes:
-  temperatureValue:
-    temp: float
-  humidityValue:
-    h: float
-  accelerometerValue:
-    ac: float
-  gyroscopeValue:
-    x: float
-    y: float
-    z: float
-  uvValue:
-    u: float
-  pressureValue:
-    p: float
-  altitudeValue:
-    a: float
+  sensorValue:
+    value: float
+    sensorName: string
 
 widgets:
-  temperatureSensor:
-    type: temperatureValue
-    display: digit
-    label: Temperature ºC
-    key: temp
-    format: fixed
- humiditySensor:
-    label: Humidity %
-    display: digit
-    key: humidityValue
-    type: fixed
-  accelerometerSensor:
-    label: Accelerometer
-    display: digit
-    key: accelerometerValue
-    type: fixed
-  gyroscopeSensor:
-    label: Humidity %
-    display: digit
-    key: gyroscopeValue
-    type: fixed
-  uvSensor:
-    label: UV Risk
-    display: digit
-    key: UValue
-    type: fixed
-  pressureSensor:
-    label: Pressure
-    display: digit
-    key: pressureValue
-    type: fixed
-  altitudeSensor:
-    label: Altitude
-    display: digit
-    key: altitudeValue
-    type: fixed 60
+  sensorDetails:
+    type: sensorValue
+    display: list-group
+    groupBy: sensorName
+    label: Sensor's details
+    keys:
+      - sensorName
+      - value

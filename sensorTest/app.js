@@ -50,8 +50,6 @@ matrix.type('gyroscope').send(data);
     start: 120,
     spin: arcDeg
   };
-
-
 });
 
 
