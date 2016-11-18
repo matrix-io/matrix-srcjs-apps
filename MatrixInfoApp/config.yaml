@@ -7,6 +7,8 @@ keywords: 'sensor, info, dash'
 
 screens:
   - - sensorDetails
+  - - gyroscopeDetails
+  - - uvDetails
 
 sensors:
   - temperature
@@ -18,8 +20,15 @@ sensors:
 
 dataTypes:
   sensorValue:
-    value: float
-    sensorName: string
+    Type Sensor: string
+    Value: float
+  gyroscopeValue:
+    Pitch: float
+    Roll: float
+    Yaw: float
+  uvValue:
+    Risk: string
+    Percentage: float
 
 widgets:
   sensorDetails:
@@ -28,5 +37,20 @@ widgets:
     groupBy: sensorName
     label: Sensor's details
     keys:
-      - sensorName
-      - value
+      - Type Sensor
+      - Value
+  gyroscopeDetails:
+    type: gyroscopeValue
+    display: list-group
+    label: Gyroscope axis
+    keys:
+      - Pitch
+      - Roll
+      - Yaw
+  uvDetails:
+    type: uvValue
+    display: list-group
+    label: UV risk details
+    keys:
+      - Risk
+      - Percentage
