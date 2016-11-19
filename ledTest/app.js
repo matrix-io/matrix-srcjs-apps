@@ -2,6 +2,14 @@
 // matrix.init()....
 //
 // have fun
+
+//first thing first
+//first example, blink LED
+matrix.led('red').render();
+
+
+/*
+
 var startAngle = 0;
  setInterval(function(){
    var leds = [];
@@ -13,6 +21,7 @@ var startAngle = 0;
        blend: true
      });
    }
-   matrix.led(leds).render();		
+   matrix.led(leds).render();
    startAngle += 5;
  }, 50);
+*/
