@@ -13,7 +13,7 @@ matrix.init('temperature', options).then(function(data){
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
               'Value': data.value,
-              'Type Sensor': data.type
+              'TypeSensor': data.type
           });
       }
   }
@@ -24,7 +24,7 @@ matrix.init('pressure', options).then(function(data){
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
               'Value': data.value,
-              'Type Sensor': data.type
+              'TypeSensor': data.type
           });
       }
   }
@@ -35,7 +35,7 @@ matrix.init('altitude', options).then(function(data){
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
               'Value': data.value,
-              'Type Sensor': data.type
+              'TypeSensor': data.type
           });
       }
   }
@@ -46,7 +46,7 @@ matrix.init('humidity', options).then(function(data){
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
               'Value': data.value,
-              'Type Sensor': data.type
+              'TypeSensor': data.type
           });
       }
   }

@@ -20,7 +20,7 @@ sensors:
 
 dataTypes:
   sensorValue:
-    Type Sensor: string
+    TypeSensor: string
     Value: float
   gyroscopeValue:
     Pitch: float
@@ -37,7 +37,7 @@ widgets:
     groupBy: sensorName
     label: Sensor's details
     keys:
-      - Type Sensor
+      - TypeSensor
       - Value
   gyroscopeDetails:
     type: gyroscopeValue
