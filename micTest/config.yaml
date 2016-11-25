@@ -1,0 +1,9 @@
+# do not touch this line
+configVersion: 2
+
+name: micTest
+description: woooot
+keywords: 'mic, test'
+
+sensors:
+  - mic

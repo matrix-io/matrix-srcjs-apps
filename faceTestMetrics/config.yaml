@@ -1,0 +1,88 @@
+# do not touch this line
+configVersion: 2
+
+description: test face
+keywords: 'test, demographics, detection'
+name: faceTestMetrics
+
+services:
+  demographics01:
+    engine: detection
+    type: demographics
+    name: faceDetect
+dataTypes:
+  face:
+    view: boolean
+    count: integer
+    gender: string
+    age: integer
+    women: integer
+    men: integer
+    emotion: string
+    happy: integer
+    sad: integer
+    disgust: integer
+    surprised: integer
+    confused: integer
+    calm: integer
+    angry: integer
+    views: integer
+    viewsPercentage: float
+screens:
+- - radar
+  - pie
+  - gauge
+- - list
+- - listGroup
+- - details
+widgets:
+
+  radar:
+    display: radar
+    keys: 
+      - happy
+      - sad
+      - disgust
+      - surprised
+      - confused
+      - calm
+      - angry
+    label: 'Emotions'
+    type: face
+  pie:
+    display: pie-chart
+    keys: 
+      - men
+      - women
+    label: 'Gender'
+    type: face
+  gauge:
+    display: gauge
+    keys: 
+      - views
+    label: 'Views'
+    type: face
+  list:
+    display: list
+    keys: 
+      - count
+      - gender
+      - view
+    label: 'Last faces'
+    type: face
+  listGroup:
+    display: list-group
+    keys: 
+      - gender
+      - count
+    groupBy: gender
+    label: 'Last faces'
+    type: face
+  details:
+    display: list-group
+    keys: 
+      - gender
+      - count
+    groupBy: gender
+    label: 'Last faces'
+    type: face

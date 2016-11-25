@@ -1,0 +1,195 @@
+# do not touch this line
+configVersion: 2
+description: App to test the dashboard
+keywords: 'dashboard, widgets'
+name: testDashboardWidgets
+sensors:
+ - temperature
+ - uv
+ - humidity
+ - pressure
+ - gyroscope
+ - accelerometer
+services:
+  demographics01:
+    engine: detection
+    type: demographics
+    name: faceDectionLeonardo
+dataTypes:
+  face:
+    view: boolean
+    count: integer
+    gender: string
+    age: integer
+    women: integer
+    men: integer
+    emotion: string
+    happy: integer
+    sad: integer
+    disgust: integer
+    surprised: integer
+    confused: integer
+    calm: integer
+    angry: integer
+    views: integer
+    viewsPercentage: float
+  systemTemperature:
+    temperature: float
+  systemUV:
+    uv: float
+    uvRisk: string
+  systemHumidity:
+    humidity: float
+  systemLeds:
+    ledsOn: boolean
+  systemAccelerometer:
+    x: float
+    y: float
+    z: float
+  systemGyroscope:
+    yaw: float
+    pitch: float
+    roll: float
+  systemPressure:
+    pressure: float
+screens:
+- - indicator
+  - digit
+- - label
+  - bar
+  - line
+- - radar
+  - pie
+# - - polar
+  - gauge
+- - list
+- - listGroup
+- - details
+# - - heatmap
+# - - map
+- - button
+- - dropdown
+- - switch
+- - range
+widgets:
+  indicator:
+    display: indicator
+    keys:
+      - ledsOn
+    label: 'Leds Status'
+    type: systemLeds
+  label:
+    display: label
+    keys:
+      - uvRisk
+    label: 'UV Risk'
+    type: systemUV
+  digit:
+    display: digit
+    format: fixed
+    keys:
+      - temperature
+    label: 'Temperature'
+    type: systemTemperature
+  bar:
+    display: bar
+    format: fixed
+    keys:
+      - pressure
+    label: 'Pressure'
+    type: systemPressure
+  line:
+    display: line
+    format: fixed
+    keys: 
+      - humidity
+    label: 'Humidity'
+    type: systemHumidity
+  radar:
+    display: radar
+    keys: 
+      - happy
+      - sad
+      - disgust
+      - surprised
+      - confused
+      - calm
+      - angry
+    label: 'Emotions'
+    type: face
+  pie:
+    display: pie-chart
+    keys: 
+      - men
+      - women
+    label: 'Gender'
+    type: face
+  # polar:
+  #   display: polar
+  #   keys: 
+  #     - happy
+  #     - sad
+  #     - disgust
+  #     - surprised
+  #     - confused
+  #     - calm
+  #     - angry
+  #   label: 'Emotions'
+  #   type: face
+  gauge:
+    display: gauge
+    keys: 
+      - views
+    label: 'Views'
+    type: face
+  list:
+    display: list
+    keys: 
+      - count
+      - gender
+      - view
+    label: 'Last faces'
+    type: face
+  listGroup:
+    display: list-group
+    keys: 
+      - gender
+      - count
+    groupBy: gender
+    label: 'Last faces'
+    type: face
+  details:
+    display: list-group
+    keys: 
+      - gender
+      - count
+    groupBy: gender
+    label: 'Last faces'
+    type: face
+  # heatmap:
+  # map:
+  button:
+    control: button
+    map:
+    - event: blueColorClick
+      value: Blue Color
+    - event: redColorClick
+      value: Red Color
+  dropdown:
+    control: dropdown
+    map:
+    - event: greenColorSelected
+      value: Green Color
+    - event: yellowColorSelected
+      value: Yellow Color
+  switch:
+    control: switch
+    trigger: turnOnLeds
+    value: 'Turn on leds'
+  range:
+    control: range
+    trigger: numberOfLeds
+    value: 'Number of leds'
+    label: 'Number of leds'
+    min: 0
+    max: 35
