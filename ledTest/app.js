@@ -71,4 +71,4 @@ var examples = [
 var i = 0;
 setInterval(function(){
   examples[(i++)%examples.length]();
-}, 3000);
+}, 1000);
