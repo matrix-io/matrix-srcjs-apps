@@ -1,0 +1,23 @@
+# do not touch this line
+configVersion: 2
+
+description: Gpio Random desc
+keywords: 'gpio,test,app'
+name: gpioTest
+displayName: GPIO Test
+
+integrations:
+  - gpio
+
+screens:
+ - - actionButtons
+widgets:
+  actionButtons:
+    control: button
+    keys:
+    - value
+    map:
+    - event: setPin
+      value: Set Pin
+    name: actionButtons
+    type: actionButtons
