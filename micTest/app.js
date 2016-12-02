@@ -1,7 +1,9 @@
-// app code goes here
-// matrix.init()....
-//
-// have fun
 matrix.init('mic').then(function(data){
-  console.log('><><><><><><>< MICRO PHONE ><><><><><><><><', data);
+  var c = ( data.value < 50 )? 'green' : ( data.value < 125 ) ? 'yellow' :
+  (data.value < 200 ) ? 'orange' : 'red';
+  
+  matrix.led({
+    arc: Math.round(data.value),
+    color: c
+  }).render();
 });
