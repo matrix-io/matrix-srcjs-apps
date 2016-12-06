@@ -32,6 +32,20 @@ var clock = function(){
 
   matrix.led([hourLed, minuteLed]).render();
 };
+var smile = [ {
+                angle: 45,
+                color: 'yellow'
+              },
+              {
+                angle: 135,
+                color: 'yellow'
+              },
+              {
+                arc: 90,
+                color: 'yellow',
+                start: 225
+              }
+            ];
 
 var examples = [
   matrix.led('blue').render,
@@ -45,24 +59,8 @@ var examples = [
   matrix.led({ color: 'red', arc: 200 }).render, //red arc
   matrix.led({ angle: 245, color: 'white', blend: true }).render, //draw a point
   matrix.led({ angle: 245, color: 'green', blend: false }).render, //draw a point
-  matrix.led().rotate(90).render, //manipulate position//rotate the lights clockwise by a specified angle
-  matrix.led({ color: '#d3d3d3'}).rotate(180).render,//manipulate position//rotate the lights clockwise by a specified angle
-  matrix.led({ color: '#4b0082'}).rotate(270).render,//manipulate position//rotate the lights clockwise by a specified angle
-  matrix.led({ color: '#blue'}).rotate(360).render,//manipulate position//rotate the lights clockwise by a specified angle
-  matrix.led([ {
-                  angle: 45,
-                  color: 'yellow'
-                },
-                {
-                  angle: 135,
-                  color: 'yellow'
-                },
-                {
-                  arc: 90,
-                  color: 'yellow',
-                  start: 225
-                }
-              ]).render, //shape objects, make a smiley face
+  matrix.led(smile).render, //shape objects, make a smiley face
+  matrix.led(smile).rotate(90).render, //manipulate position//rotate the lights clockwise by a specified angle
   matrix.led(['purple', 0, 0, 0, 'blue', 0, 0, 0, 0, 0, 0, 0, 0, 'blue', 0, 0,
                 0, 0, 0, 0, 0, 0, 'blue', 'blue', 'blue', 'blue', 'green', 'white',
                 'red', 'red', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue']).render, //direct pixel manipulation
