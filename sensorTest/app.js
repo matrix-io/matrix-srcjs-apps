@@ -50,8 +50,6 @@ matrix.init('gyroscope').then(function(data){
     start: 120,
     spin: arcDeg
   };
-
-
 });
 
 
