@@ -1,0 +1,75 @@
+# do not touch this line
+configVersion: 2
+
+description: Test Servos
+keywords: 'servo,motor,test'
+name: servoTest
+displayName: Servo Test
+
+integrations:
+  - gpio
+
+screens: 
+ - - armJoysticks
+ - - topLabel
+ - - pinSelector
+ - - inputControl
+ - - buttonsControl
+ - - rangeControl
+ - - joystickControl
+
+widgets:
+  topLabel: 
+    control: label
+    name: topLabel
+    label: General Controls
+  pinSelector: 
+    control: button
+    name: buttonsControl
+    label: PIN# to use
+    map:
+    - event: pin0
+      value: PIN \#0
+    - event: pin1
+      value: PIN \#1
+    - event: pin2
+      value: PIN \#2
+  inputControl: 
+    control: input
+    name: pinInput
+    label: or specify another PIN
+    event: pinInput
+  buttonsControl:
+    control: button
+    name: buttonsControl
+    label: Angle Buttons
+    map:
+    - event: angle0
+      value: 0
+    - event: angle45
+      value: 45
+    - event: angle90
+      value: 90
+    - event: angle135
+      value: 135
+    - event: angle180
+      value: 180
+  rangeControl:
+    control: range
+    name: angleSlider
+    label: Angle Slider
+    event: angleSlider
+    min: 0
+    max: 180
+  joystickControl: 
+    control: radial
+    name: angleJoystick
+    label: Angle Joystick
+    event: angleJoystick
+  armJoysticks:
+    control: radial
+    name: armJoysticks
+    label: Arm Controls
+    map:
+    - event: leftJoystick
+    - event: rightJoystick
