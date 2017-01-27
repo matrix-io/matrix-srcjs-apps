@@ -12,6 +12,7 @@ version: 1.0.3
 sensors:
   - temperature
   - humidity
+  - magnetometer
   - accelerometer
   - gyroscope
   - uv
@@ -20,12 +21,22 @@ sensors:
 
 dataTypes:
   temperature: float
+  magnetometer:
+    x: float
+    y: float
+    z: float
   humidity: float
-  accelerometer: float
+  accelerometer:
+    x: float
+    y: float
+    z: float
   gyroscope:
     yaw: float
     pitch: float
     roll: float
+    x: float
+    y: float
+    z: float
   uv: float
   pressure: float
   altitude: float

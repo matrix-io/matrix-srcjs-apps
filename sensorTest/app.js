@@ -4,16 +4,38 @@
 // have fun
 
 var ledState = {};
-var arcDeg = 15;
+var arcDeg = 10;
 
 setInterval(function () {
   arcDeg += 5;
-  if ( arcDeg > 60 ){
-    arcDeg = 10;
+  if ( arcDeg > 45 ){
+    arcDeg = 5;
   }
 
   matrix.led(_.values(ledState)).render();
 }, 1000);
+
+matrix.init('accelerometer').then(function(data){
+  console.log('axl>', data);
+  matrix.type('accelerometer').send(data);
+  ledState.accel = {
+    arc: arcDeg,
+    color: 'yellow',
+    start: 1,
+    spin: arcDeg
+  };
+});
+
+matrix.init('magnetometer').then(function(data){
+  console.log('mag>', data);
+  matrix.type('magnetometer').send(data);
+  ledState.mag = {
+    arc: arcDeg,
+    color: 'green',
+    start: 45,
+    spin: arcDeg
+  };
+});
 
 matrix.init('temperature').then(function(data){
   console.log('temperature >', data);
@@ -21,10 +43,9 @@ matrix.init('temperature').then(function(data){
   ledState.temp = {
     arc: arcDeg,
     color: 'blue',
-    start: 1,
+    start: 90,
     spin: arcDeg
-  }
-  ;
+  };
 });
 
 matrix.init('pressure').then(function(data){
@@ -34,7 +55,7 @@ matrix.init('pressure').then(function(data){
   ledState.pres = {
     arc: arcDeg,
     color: 'purple',
-    start: 60,
+    start: 135,
     spin: arcDeg
   };
 
@@ -47,7 +68,7 @@ matrix.init('gyroscope').then(function(data){
   ledState.g = {
     arc: arcDeg,
     color: 'green',
-    start: 120,
+    start: 180,
     spin: arcDeg
   };
 });
@@ -60,7 +81,7 @@ matrix.init('uv').then(function(data){
   ledState.u = {
     arc: arcDeg,
     color: 'yellow',
-    start: 180,
+    start: 225,
     spin: arcDeg
   };
 });
@@ -70,10 +91,10 @@ matrix.init('uv').then(function(data){
 matrix.init('altitude').then(function(data){
   console.log('altitude >', data);
   matrix.type('altitude').send(data.value);
-  ledState.a = {
+  ledState.alt = {
     arc: arcDeg,
     color: 'orange',
-    start: 240,
+    start: 270,
     spin: arcDeg
   };
 });
@@ -87,7 +108,7 @@ matrix.init('humidity').then(function(data){
   ledState.h = {
     arc: arcDeg,
     color: 'red',
-    start: 300,
+    start: 315,
     spin: arcDeg
   };
 });
