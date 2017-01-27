@@ -8,5 +8,7 @@ This application will test the basic sensors available on MATRIX OS.
 - uv
 - altitude
 - gyroscope
+- magnetometer
+- accelerometer
 
-Upon running six bands of colored lights should display on the led for each sensor.
+Upon running eight bands of colored lights should display on the led for each sensor.
