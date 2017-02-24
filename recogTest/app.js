@@ -23,4 +23,4 @@ matrix.on('recog', function(d) {
     matrix.led('green').render();
   });
   console.log('recog!');
-})
+});

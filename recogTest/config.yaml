@@ -3,7 +3,7 @@ configVersion: 2
 
 description: recognition demo
 keywords: cv
-name: recog
+name: recogTest
 displayName: Recog
 
 events:
