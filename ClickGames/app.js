@@ -29,6 +29,15 @@ menu
 
 */
 
+  var failedHitsCounter = 0.0;
+  var perfectHitsCounter = 0.0;
+  var okHitsCounter = 0.0;
+  var perfectsInARow = 0;
+  var newLifePerfectCount = 5;
+  var perfectHitScore = 2;
+  var okHitScore = 1;
+  var failedHitScore = -2;
+
 var states = {
   'menu': {}, 
   'quickplay': {},
@@ -217,7 +226,9 @@ function start() {
       ], next);
     }
   ], function () { 
-    matrix.type('clickGames').send({ 'status': 'Main Menu' });
+    //matrix.type('clickGames').send({ 'status': 'Main Menu' });
+    matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Main menu" });
+   
     changeState('menu');
   });
 }
@@ -249,14 +260,14 @@ states.quickplay.start = function () {
   var perfectUIFor = 5;
   var okUIFor = 5;
 
-  var failedHitsCounter = 0.0;
-  var perfectHitsCounter = 0.0;
-  var okHitsCounter = 0.0;
-  var perfectsInARow = 0;
-  var newLifePerfectCount = 5;
-  var perfectHitScore = 2;
-  var okHitScore = 1;
-  var failedHitScore = -2;
+  failedHitsCounter = 0.0;
+  perfectHitsCounter = 0.0;
+  okHitsCounter = 0.0;
+  perfectsInARow = 0;
+  newLifePerfectCount = 5;
+  perfectHitScore = 2;
+  okHitScore = 1;
+  failedHitScore = -2;
 
 
   function resetHit() {
@@ -282,7 +293,9 @@ states.quickplay.start = function () {
         } else {
           player.play(__dirname + '/Sounds/Arcade/perfect.wav', function (err) { });
         }
-        matrix.type('clickGames').send({ 'lives': currentLives, 'perfectHitsCounter': perfectHitsCounter, 'status': 'PERFECT!', 'score': score  });
+        //matrix.type('clickGames').send({ 'lives': currentLives, 'perfectHitsCounter': perfectHitsCounter, 'status': 'PERFECT!', 'score': score  });
+        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Perfect" });
+   
         break;
       case 'ok':
         drawScoreBarObject(hitColor.ok);
@@ -290,7 +303,9 @@ states.quickplay.start = function () {
         okHitsCounter++;
         score += okHitScore;
         okUIFor = coloredJumps;
-        matrix.type('clickGames').send({ 'okHitsCounter': okHitsCounter, 'status': 'GOOD', 'score': score });
+        //matrix.type('clickGames').send({ 'okHitsCounter': okHitsCounter, 'status': 'GOOD', 'score': score });
+        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Good" });
+   
         player.play(__dirname + '/Sounds/Arcade/progress.wav', function (err) { });
         perfectsInARow = 0;
         break;
@@ -306,7 +321,9 @@ states.quickplay.start = function () {
         } else { // Reset to start 
           player.play(__dirname + '/Sounds/Arcade/miss.wav', function (err) { });
         }
-        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'status': 'MISS!', 'score': score  });
+        //matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'status': 'MISS!', 'score': score  });
+        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "MISS!" });
+   
         perfectsInARow = 0;
         break;
       default:
@@ -365,7 +382,9 @@ states.quickplay.start = function () {
         if (finalHit) {
           finalHit = false;
           clearInterval(states.quickplay.interval); // Stop moving currentLed
-          matrix.type('clickGames').send({ 'status': 'Game Over', 'score': score });
+          //matrix.type('clickGames').send({ 'status': 'Game Over', 'score': score });
+          matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Game Over" });
+   
           player.play(__dirname + '/Sounds/Arcade/explosion.wav', function (err) {
             changeState('quickplay', 'menu');
           });
