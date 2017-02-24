@@ -1,9 +1,12 @@
 matrix.on('train', function(d) {
   matrix.init('recognition', { mode: 'train', tag: 'test' }).then(function(d) {
-    matrix.led({
-      arc: 180,
-      color: green
-    }).render();
+    if (d.hasOwnProperty('count')) {
+      // means it's partially done
+      matrix.led({
+        arc: Math.round(360 * (d.count / d.target)),
+        color: 'blue'
+      }).render();
+    }
     console.log('trained!', d);
   });
   console.log('training started>>>>>', d);
@@ -17,6 +20,7 @@ matrix.on('train', function(d) {
 matrix.on('recog', function(d) {
   matrix.init('recognition', { tag: 'test' }).then(function(d) {
     console.log('RECOG>>>!', d);
+    matrix.led('green').render();
   });
   console.log('recog!');
 })
