@@ -8,25 +8,25 @@ matrix.led([
 
 
 matrix.on('reset', function() {
-  matrix.service('recognition').untrain('test')
-  matrix.led('red').render()
+  matrix.service('recognition').untrain('test');
+  matrix.led('red').render();
   setTimeout(function() {
     matrix.led('black').render();
-  }, 1000)
-})
+  }, 1000);
+});
 
 
 
 matrix.on('listtag', function() {
 
   matrix.service('recognition').getTags().then(function(tags) {
-    matrix.led('green').render()
+    matrix.led('green').render();
     setTimeout(function() {
       matrix.led('black').render();
     }, 1000);
     console.log('>>>>>>>>>>TAGS>>>>>>>>>>>>>>', tags);
-  })
-})
+  });
+});
 
 matrix.on('train', function(d) {
 
@@ -79,7 +79,7 @@ matrix.on('train', function(d) {
 //
 // matrix.init('recognition', {tag: 'test'}).then(function (d) {
 //   console.log('RECOGNIZED!!>!!>!>>!>!>!>', d);
-// })
+// });
 
 matrix.on('recog', function(d) {
   // lighting
@@ -108,4 +108,4 @@ matrix.on('recog', function(d) {
     console.log('RECOG>>>!', d);
     matrix.led('green').render();
   });
-})
+});

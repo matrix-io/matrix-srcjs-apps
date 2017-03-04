@@ -15,8 +15,8 @@ services:
     type: face
 
 screens: 
-  - train
-  - recognize
+  - - train
+  - - recognize
   
 widgets:
   train:
