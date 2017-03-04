@@ -108,4 +108,5 @@ matrix.on('recog', function(d) {
     console.log('RECOG>>>!', d);
     matrix.led('green').render();
   });
+  console.log('recog!');
 });

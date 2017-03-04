@@ -1,14 +1,12 @@
 {
-  "name": "baseapp.matrix",
+
   "version": "1.0.2",
+  "name": "recogTest",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cpu-stats": "^1.0.0"
-  }
+  "license": "ISC"
 }
