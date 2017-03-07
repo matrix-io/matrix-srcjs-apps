@@ -70,7 +70,7 @@ matrix.on('train', function(d) {
       matrix.led('blue').render();
       console.log('trained!', d);
       // todo: add stop
-      recog.stop();
+      //recog.stop(); //Not yet implemented, crashing
 
     }
   });
@@ -106,7 +106,16 @@ matrix.on('recog', function(d) {
   matrix.service('recognition').start('test').then(function(d) {
     stopLights();
     console.log('RECOG>>>!', d);
-    matrix.led('green').render();
+        
+    var MinDistanceFace = _.values(d.matches);
+    MinDistanceFace = _.sortBy(MinDistanceFace, ['score'])[0];
+    
+    console.log('Min Distance Face', MinDistanceFace);
+    if(MinDistanceFace.score < 0.85) {
+      matrix.led('green').render();
+    } else {
+      matrix.led('red').render();
+    }
   });
   console.log('recog!');
 });
