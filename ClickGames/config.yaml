@@ -20,6 +20,13 @@ screens:
 - - perfectHitsCounter
   - okHitsCounter
 
+imageUrls: 
+  - https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/click-games-1.jpg
+  - https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/click-games-2.jpg
+  - https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/click-games-3.jpg
+
+galleryUrl: https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/click-games-g.png
+
 widgets:
   mouseActions:
     control: button

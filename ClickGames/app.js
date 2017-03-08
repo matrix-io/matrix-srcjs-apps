@@ -1,14 +1,7 @@
-// app code goes here
-// matrix.init()....
-//
-// have fun
-
-var fs = require('fs'),
-async = require('async'),
-player = require('play-sound')(opts = {}),
-treeKill = require('tree-kill'),
-EventEmitter = require('events').EventEmitter,
-Mouse = require('./node-mouse.js');
+var async = require('async'),
+  player = require('play-sound')({}),
+  treeKill = require('tree-kill'),
+  Mouse = require('./node-mouse.js');
 var mouse = new Mouse();
 
 /*
@@ -29,31 +22,37 @@ menu
 
 */
 
-  var failedHitsCounter = 0.0;
-  var perfectHitsCounter = 0.0;
-  var okHitsCounter = 0.0;
-  var perfectsInARow = 0;
-  var newLifePerfectCount = 5;
-  var perfectHitScore = 2;
-  var okHitScore = 1;
-  var failedHitScore = -2;
+var failedHitsCounter = 0.0;
+var perfectHitsCounter = 0.0;
+var okHitsCounter = 0.0;
+var perfectsInARow = 0;
+var newLifePerfectCount = 5;
+var perfectHitScore = 2;
+var okHitScore = 1;
+var failedHitScore = -2;
 
 var states = {
-  'menu': {}, 
+  'menu': {},
   'quickplay': {},
   'options': {},
   'themes': {},
 };
 
-var themes;
+//var themes;
 
 
-var defaultUIColor = 'darkgray';
-//rgba(255, 0, 100, 0.6)
+//var defaultUIColor = 'darkgray'; //169, 169, 169
+var defaultUIColor = '#1D1D1D'; //29, 29, 29
+//var cursorColor = 'magenta'; //255, 0, 255
+var cursorColor = '#2B002B'; //43, 0, 43
+
 var hitColor = {
-  perfect: 'green',
-  ok: 'yellow',
-  failed: 'red'
+  //perfect: 'green', //0, 128, 0
+  perfect: '#001600', //0, 22, 0
+  //ok: 'yellow', //255, 255, 0
+  ok: '#2B2B00', //43, 43, 0
+  //failed: 'red' //255, 0, 0
+  failed: '#2B0000' //43, 0, 0
 };
 
 var currentHit = 'none';
@@ -61,23 +60,24 @@ var finalHit = false;
 var paused = false;
 
 //This section is used to display menus and results
-var ledAmount = 34; 
+var ledAmount = 34;
 var uiLower = 1;
 var uiWidth = 5;
 var uiHigher = (uiLower + uiWidth - 1) % ledAmount;
-var uiBorderColor = 'darkblue';
-var uiLivesColor = '#CC6600';
+//var uiBorderColor = 'darkblue'; //00, 00, 139
+var uiBorderColor = '#000018'; //00, 00, 24
+//var uiLivesColor = '#CC6600'; //204,102,00
+var uiLivesColor = '#221100'; //34,17,00
 
 var startingLed = uiHigher + 2; // +2 to keep a separator between UI and starting LED
-var endingLed = 34; 
+var endingLed = 34;
 
 // Starting configuration 
 var okLowerLimit = 20;
-var okHigherLimit = 34;
-var okLimitRange = okHigherLimit - okLowerLimit + 1; //25 - 34 = 10 LEDS
+var okHigherLimit = endingLed;
+//var okLimitRange = okHigherLimit - okLowerLimit + 1; //25 - 34 = 10 LEDS
 var okDesiredRange = 3;
 var perfectRange = 1;
-var difficulty = 0; //NOT USED
 var startingSpeed = 5;
 var startingLives = 3;
 var maxLives = 5;
@@ -125,7 +125,7 @@ function flashArc(start, length, color, time, reset, callback) {
 }
 
 function paintRange(fromLed, toLed, color) {
-  for (var i = fromLed; i <= toLed; i++) { ledArray[i] = color; } 
+  for (var i = fromLed; i <= toLed; i++) { ledArray[i] = color; }
 }
 
 function drawScoreBarObject(color) {
@@ -134,7 +134,7 @@ function drawScoreBarObject(color) {
   ledArray[uiHigher + 1] = uiBorderColor; // Right limit
   var livestoDraw = currentLives;
   if (livestoDraw > uiWidth) livestoDraw = uiWidth; // Don't exceed ui limits
-  if (color == defaultUIColor) {
+  if (color === defaultUIColor) {
     paintRange(uiLower, uiLower + livestoDraw - 1, uiLivesColor); // Paint lives
   }
 }
@@ -149,13 +149,8 @@ function relocateTarget() {
 
 
 //MXSS ACTIONS
-matrix.on('leftClick', function() { 
-  onOkButton();
-});
-
-matrix.on('rightClick', function() { 
-  onCancelButton();
-});
+matrix.on('leftClick', onOkButton);
+matrix.on('rightClick', onCancelButton);
 
 // MOUSE ACTIONS
 mouse.on('mousedown', function (actions) {
@@ -174,21 +169,20 @@ function onOkButton() {
         changeState('quickplay', 'menu');
       } else { //Playing
         if (currentLed <= currentPerfectHigh && currentLed >= currentPerfectLow) {
-          console.log("*********************************** PERFECT HIT *********************************** (" + currentPerfectLow + " < " + currentLed + " < " + currentPerfectHigh + ")");
+          //console.log('*********************************** PERFECT HIT *********************************** (' + currentPerfectLow + ' < ' + currentLed + ' < ' + currentPerfectHigh + ')');
           currentHit = 'perfect';
         } else if (currentLed <= currentOkHigh && currentLed >= currentOkLow) {
-          console.log("*********************************** OK HIT *********************************** (" + currentOkLow + " < " + currentLed + " < " + currentOkHigh + ")");
+          //console.log('*********************************** OK HIT *********************************** (' + currentOkLow + ' < ' + currentLed + ' < ' + currentOkHigh + ')');
           currentHit = 'ok';
         } else {
-          console.log("*********************************** FAILED HIT *********************************** (" + currentLed + ")");
+          //console.log('*********************************** FAILED HIT *********************************** (' + currentLed + ')');
           currentHit = 'failed';
-        } 
+        }
       }
       break;
     default:
       break;
   }
-  //flashArc(0, 360, 'blue', 500, true, function () {});
 }
 
 function onCancelButton() {
@@ -199,7 +193,7 @@ function onCancelButton() {
     case 'quickplay':
       if (!paused) {
         paused = true;
-        player.play(__dirname + '/Sounds/Speech/Diego/GiveUp.ogg', function (err) {});
+        player.play(__dirname + '/Sounds/Speech/Diego/GiveUp.ogg', function (err) { });
       } else {
         paused = false;
       }
@@ -207,14 +201,13 @@ function onCancelButton() {
     default:
       break;
   }
-  //flashArc(0, 360, 'red', 500, true, function () {});
 }
 
 start(); //Intro arc
 
 function start() {
   async.parallel([
-    function (next) { 
+    function (next) {
       player.play(__dirname + '/Sounds/Speech/Diego/ClickGames.ogg', function (err) { next(); });
     },
     function (next) {
@@ -225,26 +218,26 @@ function start() {
         async.apply(flashArc, 270, 90, 'yellow', 100, true)
       ], next);
     }
-  ], function () { 
+  ], function () {
     //matrix.type('clickGames').send({ 'status': 'Main Menu' });
-    matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Main menu" });
-   
+    matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': 'Main menu' });
+
     changeState('menu');
   });
 }
 
 states.menu.start = function () {
-  paintRange(0, 34, '0'); //Set background
+  paintRange(0, endingLed, '0'); //Set background
   paintRange(uiLower, uiHigher, defaultUIColor); // Background
   ledArray[uiLower - 1] = uiBorderColor; // Left limit
   ledArray[uiHigher + 1] = uiBorderColor; // Right limit
   player.play(__dirname + '/Sounds/Speech/Diego/QuickPlay.ogg', function (err) { }); //Option selected by default
   var menuBGMProcess = loop(__dirname + '/Sounds/Intro.ogg'); //Intro BGM
-  
+
   states.menu.kill = function () {
     treeKill(menuBGMProcess.pid);
   };
-  
+
   matrix.led(ledArray).render();
 };
 
@@ -252,7 +245,7 @@ states.quickplay.start = function () {
 
   states.quickplay.bgm = loop(__dirname + '/Sounds/Arcade/bgm.ogg'); //Intro BGM
   states.quickplay.kill = function () {
-    if(states.quickplay.hasOwnProperty('interval') && states.quickplay.interval) clearInterval(states.quickplay.interval);
+    if (states.quickplay.hasOwnProperty('interval') && states.quickplay.interval) clearInterval(states.quickplay.interval);
     treeKill(states.quickplay.bgm.pid);
   };
 
@@ -267,14 +260,15 @@ states.quickplay.start = function () {
   newLifePerfectCount = 5;
   perfectHitScore = 2;
   okHitScore = 1;
-  failedHitScore = -2;
+  failedHitScore = 0;
 
 
   function resetHit() {
-    currentHit = "none";
+    currentHit = 'none';
     currentLed = startingLed;
     relocateTarget();
   }
+
 
   function countHit(type) {
     var coloredJumps = 5;
@@ -286,29 +280,31 @@ states.quickplay.start = function () {
         score += perfectHitScore;
         perfectUIFor = coloredJumps;
         perfectsInARow++;
-        if (perfectsInARow == newLifePerfectCount && currentLives < maxLives) {
-          currentLives++;
+
+        if (perfectsInARow === newLifePerfectCount) {
+          if (currentLives < maxLives) currentLives++;
           perfectsInARow = 0;
           player.play(__dirname + '/Sounds/Arcade/lifeUp.wav', function (err) { });
         } else {
           player.play(__dirname + '/Sounds/Arcade/perfect.wav', function (err) { });
         }
-        //matrix.type('clickGames').send({ 'lives': currentLives, 'perfectHitsCounter': perfectHitsCounter, 'status': 'PERFECT!', 'score': score  });
-        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Perfect" });
-   
+
+        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': 'Perfect' });
         break;
+
       case 'ok':
         drawScoreBarObject(hitColor.ok);
         resetHit();
         okHitsCounter++;
         score += okHitScore;
         okUIFor = coloredJumps;
-        //matrix.type('clickGames').send({ 'okHitsCounter': okHitsCounter, 'status': 'GOOD', 'score': score });
-        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Good" });
-   
-        player.play(__dirname + '/Sounds/Arcade/progress.wav', function (err) { });
         perfectsInARow = 0;
+
+        player.play(__dirname + '/Sounds/Arcade/progress.wav', function (err) { });
+        
+        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': 'Good' });
         break;
+
       case 'failed':
         drawScoreBarObject(hitColor.failed);
         resetHit();
@@ -316,41 +312,38 @@ states.quickplay.start = function () {
         score += failedHitScore;
         currentLives--;
         failedUIFor = coloredJumps;
+        perfectsInARow = 0;
+
         if (currentLives === 0) { // If lives are over, stop
           finalHit = true;
         } else { // Reset to start 
           player.play(__dirname + '/Sounds/Arcade/miss.wav', function (err) { });
         }
-        //matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'status': 'MISS!', 'score': score  });
-        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "MISS!" });
-   
-        perfectsInARow = 0;
+        
+        matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': 'MISS!' });
         break;
+
       default:
         break;
     }
   }
 
-  startRunning(startingSpeed);
-  /*var prevDate = new Date();
-  var currDate = new Date();
-  var timeCounter = new Date();
-  var prevTimeCounter = new Date();*/
+  startRunning(startingSpeed); //START
+
   function startRunning(speed) {
     resetHit();
     currentLives = startingLives;
-    matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Quick Play" });
     score = 0;
-    states.quickplay.interval = setInterval(function () {
-      /*prevDate = currDate;
-      currDate = new Date();*/
-      paintRange(0, 34, 0); // Set background LEDs to black
-      
-      if (!paused) {
 
+    matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': 'Quick Play' });
+
+    states.quickplay.interval = setInterval(function () {
+      paintRange(0, 34, 0); // Set background LEDs to black
+
+      if (!paused) {
         currentLed++; // Move current led
-        paintRange(currentOkLow, currentOkHigh, 'yellow'); // Paint ok
-        paintRange(currentPerfectLow, currentPerfectHigh, 'green'); // Paint perfect
+        paintRange(currentOkLow, currentOkHigh, hitColor.ok); // Paint ok zone
+        paintRange(currentPerfectLow, currentPerfectHigh, hitColor.perfect); // Paint perfect zone
 
         // Color the UI according to previous hit
         if (failedUIFor > 0) { // Failed hit
@@ -368,29 +361,28 @@ states.quickplay.start = function () {
         okUIFor--;
 
         //Count hit        
-        if (currentLed >= endingLed || currentHit == 'failed') {
+        if (currentLed >= endingLed || currentHit === 'failed') {
           countHit('failed');
-        } else if (currentHit == 'perfect') {
+        } else if (currentHit === 'perfect') {
           countHit('perfect');
-        } else if (currentHit == 'ok') {
+        } else if (currentHit === 'ok') {
           countHit('ok');
         }
 
-        ledArray[currentLed] = 'magenta'; // Paint current led
+        ledArray[currentLed] = cursorColor; // Paint current led
         matrix.led(ledArray).render(); // Render Everloop
 
         if (finalHit) {
           finalHit = false;
           clearInterval(states.quickplay.interval); // Stop moving currentLed
-          //matrix.type('clickGames').send({ 'status': 'Game Over', 'score': score });
-          matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': "Game Over" });
-   
+          matrix.type('clickGames').send({ 'lives': currentLives, 'failedHitsCounter': failedHitsCounter, 'okHitsCounter': okHitsCounter, 'perfectHitsCounter': perfectHitsCounter, 'score': score, 'status': 'Game Over' });
+
           player.play(__dirname + '/Sounds/Arcade/explosion.wav', function (err) {
             changeState('quickplay', 'menu');
           });
         }
-      } else {
-        paintRange(0, 34, uiLivesColor);
+      } else { //Pause
+        paintRange(0, endingLed, uiLivesColor);
         matrix.led(ledArray).render();
       }
     }, speed);
