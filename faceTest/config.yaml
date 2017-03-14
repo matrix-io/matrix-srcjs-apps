@@ -4,6 +4,7 @@ configVersion: 2
 description: test face
 keywords: test
 name: faceTest
+displayName: 'Face Test'
 
 services:
   faceTest:
