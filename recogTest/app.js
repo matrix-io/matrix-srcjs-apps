@@ -56,7 +56,7 @@ matrix.on('train', function(d) {
 
 
   // console.log('>?>>>>',matrix.service('recognition').train('test'));
-  var recog = matrix.service('recognition').train('test').then(function(d) {
+  matrix.service('recognition').train('test').then(function(d) {
     stopLights();
     if (!trained && d.hasOwnProperty('count')) {
       // means it's partially done
@@ -81,12 +81,12 @@ matrix.on('train', function(d) {
 //   console.log('RECOGNIZED!!>!!>!>>!>!>!>', d);
 // });
 
-matrix.on('recog', function(d) {
+matrix.on('recog', function() {
   // lighting
   var a = 180;
   var a2 = 90;
   var l = setInterval(function() {
-    matrix.led([{
+    matrix.le([{
       arc: Math.round(180 * Math.sin(a)),
       color: 'darkblue',
       start: a2

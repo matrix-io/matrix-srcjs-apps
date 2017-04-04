@@ -1,4 +1,12 @@
 name: clock
-version: 1
 configVersion: 2
-description: clocks tell time
+description: Basic clock application using LED array.
+keywords: time, led
+
+categories:
+  - entertainment
+
+imageUrls: 
+  - https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/clock.jpg
+
+galleryImageUrl: https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/clock-g.jpg

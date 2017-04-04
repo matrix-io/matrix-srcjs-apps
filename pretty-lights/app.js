@@ -1,3 +1,5 @@
+matrix.on('1', function(){
+
 // lighting
 var a = 180;
 var a2 = 0;
@@ -14,8 +16,12 @@ var l = setInterval(function() {
   a = (a < 0) ? 180 : a - 0.1;
   //a2 = (a2 > 360) ? 0 : a2 + 5;
 }, 25);
+})
 
+matrix.on('stop', stopLights);
 function stopLights() {
   clearInterval(l);
 }
+
+
 
