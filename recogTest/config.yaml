@@ -5,9 +5,14 @@ description: recognition demo
 keywords: cv
 name: recogTest
 displayName: Recog
+galleryUrl: https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/recog-g.png
+imageUrls:
+  - https://storage.googleapis.com/admobilize-assets/matrix-appstore-images-tmp/app-tn/recog.png
 
 events:
   - train
+  - recog
+  - reset
   
 services:
   re:

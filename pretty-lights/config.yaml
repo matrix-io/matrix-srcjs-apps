@@ -5,3 +5,6 @@ description: ''''
 keywords: ''
 name: pretty-lights
 displayName: Pretty Lights
+
+events:
+  - testTest

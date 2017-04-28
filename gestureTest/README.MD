@@ -2,7 +2,7 @@
 Testing gesture detection. Lights should respond to palm detections.
 
 ```
-matrix.init('palm').then(function(data){
+matrix.service('palm').start().then(function(data){
 // do some action
 });
 ```

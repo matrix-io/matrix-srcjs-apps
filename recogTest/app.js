@@ -56,7 +56,7 @@ matrix.on('train', function(d) {
 
 
   // console.log('>?>>>>',matrix.service('recognition').train('test'));
-  var recog = matrix.service('recognition').train('test').then(function(d) {
+  matrix.service('recognition').train('test').then(function() {
     stopLights();
     if (!trained && d.hasOwnProperty('count')) {
       // means it's partially done
@@ -76,12 +76,9 @@ matrix.on('train', function(d) {
   });
 });
 
-//
-// matrix.init('recognition', {tag: 'test'}).then(function (d) {
-//   console.log('RECOGNIZED!!>!!>!>>!>!>!>', d);
-// });
 
-matrix.on('recog', function(d) {
+
+matrix.on('recog', function() {
   // lighting
   var a = 180;
   var a2 = 90;
@@ -106,12 +103,12 @@ matrix.on('recog', function(d) {
   matrix.service('recognition').start('test').then(function(d) {
     stopLights();
     console.log('RECOG>>>!', d);
-        
+
     var MinDistanceFace = _.values(d.matches);
     MinDistanceFace = _.sortBy(MinDistanceFace, ['score'])[0];
-    
+
     console.log('Min Distance Face', MinDistanceFace);
-    if(MinDistanceFace.score < 0.85) {
+    if (MinDistanceFace.score < 0.85) {
       matrix.led('green').render();
     } else {
       matrix.led('red').render();

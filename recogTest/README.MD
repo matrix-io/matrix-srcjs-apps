@@ -1,8 +1,23 @@
-This is your app folder. Please only change app.js and config.yaml.
+To use:
 
-Do not modify index.js.
+## Basic Instructions
 
-You may add packages via `npm`, they will be installed when the application is deployed to a device. 
+Login to your MATRIX OS Dashboard or Mobile Application
+
+Find your Device and Application Installation
+
+Use the buttons provided to train and recognize.
+
+## Advanced Instructions
+
+`matrix use <deviceId>` - select a device id
+`matrix trigger <name>` - issue an event
+
+### Event List
+- listtag - tests `getTags()`
+- reset   - deletes training models
+- train   - adds 'test' tag to recognized model
+- recog   - recognizes models returning tags and distance
 
 ## Developer Documentation
 
