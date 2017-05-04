@@ -1,40 +1,23 @@
-// app code goes here
-// matrix.init()....
-//
-// have fun
-
-var pinToWrite = 4;
+var pin = 4;
 var value = 1;
-var pinValues = [];
-var ledArray = [];
-var pinOnColor = 'darkblue';
-var pinOffColor = 'darkred';
+var readPin = 1;
+var readPin2 = 3;
 
-function pollPin(pinToRead) {
-  matrix.gpio.read(pinToRead, function (value) {
-    if (pinValues.hasOwnProperty(pinToRead)) {
-      if (pinValues[pinToRead] != value) {
-        pinValues[pinToRead] = value;
-        console.log('GPIO PIN #' + pinToRead + ' changed to ' + value);
-        for (var index = 0; index < pinValues.length; index++) {
-          pinValues[index] == 1 ? ledArray[index] = pinOnColor : ledArray[index] = pinOffColor;
-        }
-        matrix.led(ledArray).render();
-      }
-    } else {
-      pinValues[pinToRead] = value;
-      console.log('GPIO PIN #' + pinToRead + ' is set to ' + value);
-    }
-  });
-}
+matrix.gpio.read(readPin, function (value) {
+  console.log("Value for PIN #" + readPin, value);   // The current state of the pin
+});
 
-pollPin(0);
-pollPin(2);
+matrix.gpio.read(readPin2, function (value) {
+  console.log("Value for PIN #" + readPin2, value);   // The current state of the pin
+});
 
 matrix.on('setPin', function () {
   if (value == 1) value = 0;
   else value = 1;
-  matrix.gpio.write(pinToWrite, value, function (err) {
+  matrix.gpio.write(pin, value, function (err) {
     console.log("Wrote pin", err);
   });
 });
+
+
+matrix.servo(10,50);

@@ -19,6 +19,7 @@ matrix.on('testTest', function() {
 })
 
 
+matrix.on('stop', stopLights);
 function stopLights() {
   clearInterval(l);
 }
