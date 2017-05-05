@@ -82,7 +82,7 @@ matrix.on('recog', function() {
   var a = 180;
   var a2 = 90;
   var l = setInterval(function() {
-    matrix.le([{
+    matrix.led([{
       arc: Math.round(180 * Math.sin(a)),
       color: 'darkblue',
       start: a2
@@ -116,6 +116,6 @@ matrix.on('recog', function() {
   console.log('recog!');
 });
 
-matrix.on('stop', function(){
+matrix.on('stopper', function(){
   matrix.service('recognition').stop();
 })

@@ -1,6 +1,6 @@
 matrix.led('red').render();
 
-matrix.service('face').then(function(data){
+matrix.service('face').start().then(function(data){
   console.log('>>>>>>>>>>', data);
   matrix.led('green').render();
   setTimeout(function() {

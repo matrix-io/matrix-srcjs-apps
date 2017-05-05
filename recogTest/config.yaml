@@ -13,6 +13,7 @@ events:
   - train
   - recog
   - reset
+  - stopper
   
 services:
   re:
