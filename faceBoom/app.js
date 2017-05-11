@@ -25,7 +25,7 @@ var Boom = function (angle) {
 
   // determines speed mod and direction
   self.particleWeight = _.map(Array(self.particles), function () { 
-    return (Math.random() > 0.5) ? 1 : -1 * Math.max(1, Math.random() * 10 )
+    return (Math.random() > 0.5) ? 1 : -1 * Math.max(1, Math.random() * 100 )
   });
 
   console.log(self);
@@ -33,16 +33,16 @@ var Boom = function (angle) {
 
   self.render = function () {
     self.tick++;
-    // if ( self.tick > 250 ) {
-    //   booms.shift();
-    //   return;
-    // }
+    if ( self.tick > 200 ) {
+      booms.shift();
+      return;
+    }
     var lights = [self.start];
 
     // animate
     for (var i = 0; i < this.particles; i++) {
       var targetAngle = self.start + (
-        (self.speed / self.particleWeight[i]) * 
+        (self.speed / self.particleWeight[i-1]) * 
         self.tick );
       targetAngle = (targetAngle > 360) ? targetAngle % 360 : targetAngle;
       targetAngle = (targetAngle < 0) ? (targetAngle % 360) + 360 : targetAngle;
@@ -50,13 +50,13 @@ var Boom = function (angle) {
     }
 
     // dim
-    lights = lights.map((a) => {
+    lights = lights.map((a, i) => {
       return {
         angle: a,
         color: {
-          r: Math.round((self.color.r) / self.tick * Math.abs(self.particleWeight[i])),
-          g: Math.round((self.color.g) / self.tick * Math.abs(self.particleWeight[i]) ),
-          b: Math.round((self.color.b) / self.tick * Math.abs(self.particleWeight[i]) )
+          r: Math.round((self.color.r) / self.tick * Math.abs(self.particleWeight[i-1]) ),
+          g: Math.round((self.color.g) / self.tick * Math.abs(self.particleWeight[i-1]) ),
+          b: Math.round((self.color.b) / self.tick * Math.abs(self.particleWeight[i-1]) )
         },
         // blend: true
         // color: self.color
