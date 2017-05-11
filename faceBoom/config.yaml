@@ -1,0 +1,12 @@
+# do not touch this line
+configVersion: 2
+
+description: Fireworks at faces
+keywords: ''
+name: faceBoom
+displayName: Face Boom
+
+services:
+  faceTest:
+    engine: detection
+    type: face
