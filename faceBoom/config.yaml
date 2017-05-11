@@ -6,6 +6,10 @@ keywords: ''
 name: faceBoom
 displayName: Face Boom
 
+events:
+  - r
+  - s
+
 services:
   faceTest:
     engine: detection
