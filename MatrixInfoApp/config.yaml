@@ -7,8 +7,8 @@ keywords: 'sensor, info, dash'
 
 screens:
   - - sensorDetails
-  - - gyroscopeDetails
-  - - uvDetails
+    - gyroscopeDetails
+    - uvDetails
 
 sensors:
   - temperature

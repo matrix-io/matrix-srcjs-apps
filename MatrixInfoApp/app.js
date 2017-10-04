@@ -1,5 +1,5 @@
 // app code goes here
-// matrix.init()....
+// matrix.sensor()....
 //
 // have fun
 
@@ -8,7 +8,7 @@ var options = {
   timeout: 2000 //milliseconds
 };
 
-matrix.init('temperature', options).then(function(data){
+matrix.sensor('temperature', options).then(function(data){
   if (typeof(data) !== "undefined") {
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
@@ -19,7 +19,7 @@ matrix.init('temperature', options).then(function(data){
   }
 });
 
-matrix.init('pressure', options).then(function(data){
+matrix.sensor('pressure', options).then(function(data){
   if (typeof(data) !== "undefined") {
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
@@ -30,7 +30,7 @@ matrix.init('pressure', options).then(function(data){
   }
 });
 
-matrix.init('altitude', options).then(function(data){
+matrix.sensor('altitude', options).then(function(data){
   if (typeof(data) !== "undefined") {
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
@@ -41,7 +41,7 @@ matrix.init('altitude', options).then(function(data){
   }
 });
 
-matrix.init('humidity', options).then(function(data){
+matrix.sensor('humidity', options).then(function(data){
   if (typeof(data) !== "undefined") {
       if (data.hasOwnProperty('value') && data.hasOwnProperty('type')) {
           matrix.type('sensorValue').send({
@@ -52,7 +52,7 @@ matrix.init('humidity', options).then(function(data){
   }
 });
 
-matrix.init('gyroscope', options).then(function(data){
+matrix.sensor('gyroscope', options).then(function(data){
   if (typeof(data) !== "undefined") {
       if (data.hasOwnProperty('pitch') && data.hasOwnProperty('roll') && data.hasOwnProperty('yaw')) {
           matrix.type('gyroscopeValue').send({
@@ -64,7 +64,7 @@ matrix.init('gyroscope', options).then(function(data){
   }
 });
 
-matrix.init('uv', options).then(function(data){
+matrix.sensor('uv', options).then(function(data){
   if (typeof(data) !== "undefined") {
       if (data.hasOwnProperty('value') && data.hasOwnProperty('risk')) {
           matrix.type('uvValue').send({
