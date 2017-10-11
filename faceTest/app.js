@@ -1,4 +1,4 @@
-matrix.led('red').render();
+matrix.led(['darkturquoise','deepskyblue','darkgreen','darkkhaki']).render();
 
 matrix.service('face').start().then(function(data){
   console.log('>>>>>>>>>>', data);
