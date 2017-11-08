@@ -12,7 +12,7 @@ matrix.gpio.read(readPin2, function (value) {
 });
 
 matrix.on('setPin', function () {
-  if (value == 1) value = 0;
+  if (value === 1) value = 0;
   else value = 1;
   matrix.gpio.write(pin, value, function (err) {
     console.log("Wrote pin", err);
@@ -20,4 +20,4 @@ matrix.on('setPin', function () {
 });
 
 
-matrix.servo(10,50);
+matrix.servo(10, 50);

@@ -18,6 +18,7 @@ setInterval(function () {
 matrix.sensor('accelerometer').then(function (data) {
   console.log('axl>', data);
   // matrix.type('accelerometer').send(data);
+  data.save = false;
   ledState.accel = {
     arc: arcDeg,
     color: 'yellow',
@@ -28,6 +29,7 @@ matrix.sensor('accelerometer').then(function (data) {
 
 matrix.sensor('magnetometer').then(function (data) {
   console.log('mag>', data);
+  data.save = false;
   matrix.type('magnetometer').send(data);
   ledState.mag = {
     arc: arcDeg,
@@ -39,6 +41,7 @@ matrix.sensor('magnetometer').then(function (data) {
 
 matrix.sensor('temperature').then(function (data) {
   console.log('temperature >', data);
+  data.save = false;
   matrix.type('temperature').send(data.value);
   ledState.temp = {
     arc: arcDeg,
@@ -50,7 +53,7 @@ matrix.sensor('temperature').then(function (data) {
 
 matrix.sensor('pressure').then(function (data) {
   console.log('pressure >', data);
-
+  data.save = false;
   matrix.type('pressure').send(data.value);
   ledState.pres = {
     arc: arcDeg,
@@ -64,6 +67,7 @@ matrix.sensor('pressure').then(function (data) {
 
 matrix.sensor('gyroscope').then(function (data) {
   console.log('gyroscope >', data);
+  data.save = false;
   matrix.type('gyroscope').send(data);
   ledState.g = {
     arc: arcDeg,
@@ -77,6 +81,7 @@ matrix.sensor('gyroscope').then(function (data) {
 
 matrix.sensor('uv').then(function (data) {
   console.log('uv >', data);
+  data.save = false;
   matrix.type('uv').send(data.value);
   ledState.u = {
     arc: arcDeg,
@@ -90,6 +95,7 @@ matrix.sensor('uv').then(function (data) {
 
 matrix.sensor('altitude').then(function (data) {
   console.log('altitude >', data);
+  data.save = false;
   matrix.type('altitude').send(data.value);
   ledState.alt = {
     arc: arcDeg,
@@ -103,7 +109,7 @@ matrix.sensor('altitude').then(function (data) {
 
 matrix.sensor('humidity').then(function (data) {
   console.log('humidity >', data);
-
+  data.save = false;
   matrix.type('humidity').send(data.value);
   ledState.h = {
     arc: arcDeg,
