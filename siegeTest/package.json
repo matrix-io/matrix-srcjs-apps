@@ -1,6 +1,6 @@
 {
-  "name": "baseapp.matrix",
-  "version": "1.0.3",
+  "name": "Siege",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,5 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "cpu-stats": "^1.0.0"
-  }
+  "dependencies": {}
 }
