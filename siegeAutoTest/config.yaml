@@ -1,0 +1,212 @@
+# do not touch this line
+configVersion: 2
+description: Siege 'em
+keywords: 'siege, load, test, face'
+name: SiegeAuto
+shortName: SiegeAuto
+displayName: Siege Test
+dataTypes:
+  face:
+    latitude: float
+    longitude: float
+    age: int
+    ageGroup: string
+    dwellTime: float
+    emotion: string
+    impression: int
+    View: int
+    isNew: int
+    gender: string
+    count: int
+    adId: string
+    campaignId: string
+screens:
+  - - viewsImpressions
+    - attentionTime
+  - - viewsAge
+    - viewsGender
+    - viewsEmotion
+  - - ageGroups
+    - gender
+    - emotion
+  - - avgAgeGroup
+    - avgAge
+    - avgDwell
+  - - demographicInfo
+    - campaignInfo
+# - - location
+  - - remoteActions
+widgets:
+  ageGroups:
+    display: list-group
+    format: sum
+    groupBy: ageGroup
+    keys:
+      - ageGroup
+      - View
+    label: Age Groups
+    name: ageGroups
+    realtime: true
+    type: face
+  attentionTime:
+    display: line
+    format: avg
+    groupBy: gender
+    keys:
+      - dwellTime
+    label: Attention time
+    name: attentionTime
+    realtime: false
+    refresh: 5
+    type: face
+  avgAge:
+    display: digit
+    format: avg
+    keys:
+      - age
+    label: Average Age
+    name: avgAge
+    realtime: false
+    refresh: 5
+    type: face
+  avgAgeGroup:
+    display: line
+    format: avg
+    groupBy: ageGroup
+    keys:
+      - age
+    label: Average Age By Age group
+    name: avgAgeGroup
+    realtime: false
+    refresh: 5
+    type: face
+  avgDwell:
+    display: digit
+    format: avg
+    keys:
+      - dwellTime
+    label: Average Attention Time
+    name: avgDwell
+    realtime: false
+    refresh: 5
+    type: face
+  campaignInfo:
+    display: list-group
+    format: sum
+    groupBy: campaignId
+    keys:
+      - campaignId
+      - View
+      - impression
+      - time
+    label: Campaigns Summary
+    name: campaingInfo
+    realtime: true
+    type: face
+  demographicInfo:
+    display: list-group
+    format: sum
+    groupBy: adId
+    keys:
+      - adId
+      - View
+      - impression
+      - time
+    label: Ads Summary
+    name: demographinInfo
+    realtime: true
+    type: face
+  emotion:
+    display: list-group
+    format: sum
+    groupBy: emotion
+    keys:
+      - emotion
+      - View
+    label: Emotions
+    name: emotion
+    realtime: true
+    type: face
+  gender:
+    display: list-group
+    format: sum
+    groupBy: gender
+    keys:
+      - gender
+      - View
+    label: Gender
+    name: gender
+    realtime: true
+    type: face
+  viewsAge:
+    display: bar
+    format: sum
+    groupBy: ageGroup
+    keys:
+      - View
+    label: Views vs. Age group
+    name: viewsAge
+    realtime: false
+    refresh: 5
+    type: face
+  viewsEmotion:
+    display: bar
+    format: sum
+    groupBy: emotion
+    keys:
+      - View
+    label: Views vs. Emotions
+    name: emotions
+    realtime: false
+    refresh: 5
+    type: face
+  viewsGender:
+    display: bar
+    format: sum
+    groupBy: gender
+    keys:
+      - View
+    label: Views vs. Gender
+    name: viewsGender
+    realtime: false
+    refresh: 5
+    type: face
+  viewsImpressions:
+    display: line
+    format: sum
+    keys:
+      - View
+      - impression
+    label: Views vs. Impressions
+    name: viewsImpressions
+    realtime: false
+    refresh: 5
+    type: face
+  remoteActions:
+    control: button
+    map:
+    - event: send1
+      value: Send 1
+    - event: send10
+      value: Send 10
+    - event: send100
+      value: Send 100
+    - event: send500
+      value: Send 500
+    - event: send1000
+      value: Send 1000
+    - event: send5000
+      value: Send 5000
+    #- event: send20000
+    #  value: Send 20000
+    #- event: send100000
+    #  value: Send 100000
+    #- event: send300000
+    #  value: Send 300000
+# location:
+#   label: Location
+#   display: map
+#   keys:
+#     - latitude
+#     - longitude
+#   type: face

@@ -1,0 +1,8 @@
+# do not touch this line
+configVersion: 2
+
+description: asdf
+keywords: ''
+name: pipelineTest
+shortName: pipelineTest
+displayName: Pipeline Test
