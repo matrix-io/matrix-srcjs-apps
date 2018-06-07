@@ -43,3 +43,5 @@ widgets:
   
 screens: 
 - - base
+- - age
+  - display
