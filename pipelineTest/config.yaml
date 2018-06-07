@@ -6,3 +6,40 @@ keywords: ''
 name: pipelineTest
 shortName: pipelineTest
 displayName: Pipeline Test
+
+dataTypes: 
+  face: 
+    isView: boolean
+    isImpression: boolean
+    age: integer
+    gender: string
+    emotion: string
+    timestamp: integer
+    dwellTime: float
+
+widgets:
+  base:
+    display: list
+    keys: 
+      - isView
+      - isImpression
+      - age
+      - gender
+      - emotion
+      - timestamp
+      - dwellTime
+    label: "Test"
+    type: face
+  age:
+    display: digit
+    key: age
+    format: avg
+    label: Age
+  dwell:
+    display: digit
+    key: dwellTime
+    format: avg
+    label: "Dwell"
+  
+screens: 
+- - base
