@@ -15,7 +15,7 @@ dataTypes:
     gender: string
     emotion: string
     timestamp: integer
-    dwellTime: float
+    dwellTime: float  
 
 widgets:
   base:
@@ -35,11 +35,13 @@ widgets:
     key: age
     format: avg
     label: Age
+    type: face
   dwell:
     display: digit
     key: dwellTime
     format: avg
     label: "Dwell"
+    type: face
   
 screens: 
 - - base
