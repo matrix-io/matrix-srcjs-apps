@@ -46,4 +46,4 @@ widgets:
 screens: 
 - - base
 - - age
-  - display
+  - dwell
