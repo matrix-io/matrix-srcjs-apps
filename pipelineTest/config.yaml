@@ -50,7 +50,7 @@ widgets:
     type: face
   gender:
     display: list-group
-    keys: gender
+    keys: gender, isView, isImpression
     format: count
     groupby: gender
     label: "Gender"
