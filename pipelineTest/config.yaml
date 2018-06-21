@@ -42,8 +42,45 @@ widgets:
     format: avg
     label: "Dwell"
     type: face
+  view:
+    display: digit
+    key: isView
+    format: count
+    label: "Views"
+    type: face
+  gender:
+    display: list-group
+    keys:
+      - gender
+      - gender_count
+    format: count
+    label: "Gender"
+    type: face
+  maxDwellTime:
+    display: digit
+    keys: dwellTime
+    format: max
+    label: "Max Dwell Time"
+    type: face
+  minDwellTime:
+    display: digit
+    keys: dwellTime
+    format: min
+    label: "Min Dwell Time"
+    type: face
+  totalDwellTime:
+    display: digit
+    keys: dwellTime
+    format: sum
+    label: "Total Dwell Time"
+    type: face
+    
   
 screens: 
 - - base
 - - age
   - dwell
+  - view
+- - maxDwellTime
+  - minDwellTime
+  - totalDwellTime
