@@ -3,8 +3,8 @@ configVersion: 2
 
 description: asdf
 keywords: ''
-name: pipelineTest
-shortName: pipelineTest
+name: pipelineTestCrash
+shortName: pipelineTestCrash
 displayName: Pipeline Test
 
 dataTypes: 
@@ -50,10 +50,9 @@ widgets:
     type: face
   gender:
     display: list-group
-    keys:
-      - gender
-      - gender_count
+    keys: gender
     format: count
+    groupby: gender
     label: "Gender"
     type: face
   maxDwellTime:
@@ -78,9 +77,4 @@ widgets:
   
 screens: 
 - - base
-- - age
-  - dwell
-  - view
-- - maxDwellTime
-  - minDwellTime
-  - totalDwellTime
+- - gender
